@@ -1,18 +1,51 @@
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Users from "../../models/Users";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
-  const auth = getHeader(event, "authorization");
-  if (!auth) throw createError({ statusCode: 401 });
 
-  const token = auth.split(" ")[1];
-  const decoded = jwt.verify(token, config.jwtSecret);
-  if (typeof decoded === "string") {
-    throw createError({ statusCode: 401, message: "Invalid token" });
+  // ✅ خواندن کوکی
+  const token = getCookie(event, "token");
+
+  if (!token) {
+    throw createError({
+      statusCode: 401,
+      message: "Unauthenticated",
+    });
   }
+
+  let decoded: any;
+  try {
+    decoded = jwt.verify(token, config.jwtSecret);
+  } catch (err) {
+    throw createError({
+      statusCode: 401,
+      message: "Invalid or expired token",
+    });
+  }
+
+  // ✅ decoded باید object باشه
+  if (!decoded || typeof decoded === "string") {
+    throw createError({
+      statusCode: 401,
+      message: "Invalid token format",
+    });
+  }
+
+  // ✅ گرفتن یوزر از دیتابیس
   const user = await Users.findById(decoded.userId).select("-password");
 
-  return user;
+  if (!user) {
+    throw createError({
+      statusCode: 401,
+      message: "User not found",
+    });
+  }
+
+  // ✅ برگرداندن فقط اطلاعات غیرحساس
+  return {
+    _id: user._id,
+    email: user.email,
+    name: user.name || null,
+  };
 });

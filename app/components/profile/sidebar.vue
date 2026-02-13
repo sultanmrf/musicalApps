@@ -62,8 +62,7 @@
 
 <script setup>
 import SidebarItem from "./sidebarItem.vue";
-import { useAuthStore } from "../stores/auth";
-
+import { useAuthStore } from "../../../stores/auth";
 const isOpenAsideMenu = inject("isOpenAsideMenu");
 const useAuth = useAuthStore();
 

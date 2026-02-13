@@ -95,6 +95,7 @@ export const useAudioStore = defineStore("audioStore", () => {
 
   const playSong = (id: string, src: string, callBack = () => {}) => {
     if (checkSongNew(id)) {
+      debugger;
       song.value.src = src;
       changeStatusMusic(id, "stop");
       changeStatusMusic(idSongCurrentPlay.value, "waiting");
@@ -143,6 +144,11 @@ export const useAudioStore = defineStore("audioStore", () => {
     storeIndex.songSelected = findSongNext;
   };
 
+
+  const closeMusic = () => {
+    storeIndex.songSelected = null;
+  }
+
   const changeStatusMusic = (id: string, status: string) => {
     storeIndex.mySongs.list.filter((music) => {
       if (music._id === id) {
@@ -188,5 +194,6 @@ export const useAudioStore = defineStore("audioStore", () => {
     seekSliderSong,
     volumeSongs,
     volumeStatus,
+    closeMusic
   };
 });

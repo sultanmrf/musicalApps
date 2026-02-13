@@ -79,7 +79,6 @@
 </template>
 
 <script setup>
-import AlbumCard from "@/components/AlbumCard.vue";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const albums = [

@@ -1,6 +1,10 @@
+import { tree } from "#build/ui";
+
 export const useSettingStore = defineStore('settingStore', {
     state: () => ({
-        isOpenDrawerShowSong: false
+        isOpenDrawerShowSong: false,
+        showLoading: true,
+        showloadingApi: false
     }),
     getters: {
         getIsOpenDrawerShowSong(state) {

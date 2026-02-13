@@ -30,24 +30,7 @@
           Albums
         </NuxtLink>
       </li>
-      <li class="me-2">
-        <NuxtLink
-          to="/folders"
-          class="inline-block border-b-2 rounded-t-lg hover:text-primary hover:border-primary text-base p-3 text-nowrap"
-          :class="checkRoutePage('folders')"
-        >
-          Folders
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink
-          to="/suggestions"
-          class="inline-block border-b-2 rounded-t-lg hover:text-primary hover:border-primary text-base p-3 text-nowrap"
-          :class="checkRoutePage('suggestions')"
-        >
-          Suggestions
-        </NuxtLink>
-      </li>
+  
     </ul>
   </section>
 </template>

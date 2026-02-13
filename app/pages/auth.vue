@@ -212,16 +212,18 @@ const isLogin = ref(true),
   successMessage = ref(""),
   router = useRouter();
 
+
 const login = async () => {
   try {
-    const { data } = await useFetch("/api/auth/login", {
+    await $fetch("/api/auth/login", {
       method: "POST",
       body: { email: form.value.email, password: form.value.password },
     });
 
-    storeAuth.setToken(data.value.token);
-    storeAuth.fetchUser();
-    router.push("/");
+    // ✅ صبر کن تا کوکی commit شود
+    await nextTick();
+
+    router.push("/"); // redirect بعد از commit
   } catch (error) {
     console.error("Login failed", error);
   }

@@ -4,7 +4,8 @@
 @layer base {
   @font-face {
     font-family: "Shabnam";
-    src: url("/fonts/shabnam/Shabnam-FD.woff2") format("woff2"),
+    src:
+      url("/fonts/shabnam/Shabnam-FD.woff2") format("woff2"),
       url("/fonts/shabnam/Shabnam-FD.woff") format("woff");
     font-weight: 100 900;
     font-style: normal;
@@ -27,15 +28,15 @@
   body {
     font-family: "Shabnam";
     direction: ltr;
-    @apply relative text-white font-medium max-w-[37.5rem] overflow-hidden;
+    @apply relative text-white bg-white dark:bg-dark font-medium max-w-[37.5rem] overflow-hidden;
   }
 
   ::-webkit-scrollbar {
     display: none;
   }
 
- button:hover{
-     cursor: pointer;
+  button:hover {
+    cursor: pointer;
   }
 }
 
@@ -51,19 +52,22 @@
   .shadow-inset-light {
     box-shadow: inset 6px 0 9px 2px rgba(255, 255, 255, 0.3);
   }
-  
+
   .shadow-3d {
-    box-shadow: rgb(255 255 255 / 100%) -2px -2px 3px 2px,
-      rgb(0 0 0 / 50%) 3px 2px 4px 0px;
+    box-shadow:
+      rgb(255 255 255 / 28%) -2px 2px 3px 2px,
+      rgb(13 8 0 / 50%) 3px 2px 4px 0px;
   }
 
   .shadow-3d-dark {
-    box-shadow: rgb(219 219 219 / 34%) -2px -2px 3px 1px,
+    box-shadow:
+      rgb(219 219 219 / 34%) -2px -2px 3px 1px,
       rgb(0 0 0 / 50%) 3px 2px 4px 0px;
   }
 
   .shadow-inset-3d-dark {
-    box-shadow: inset rgb(219 219 219 / 34%) -2px -2px 3px 1px,
+    box-shadow:
+      inset rgb(219 219 219 / 34%) -2px -2px 3px 1px,
       inset rgb(0 0 0 / 92%) 3px 2px 4px 0px;
   }
 
@@ -81,9 +85,7 @@
 
   .bg-gradient-linear-dark {
     background: linear-gradient(
-      18deg,
-      rgb(29 29 29) 32%,
-      rgb(239 150 62 / 21%) 78%
+      linear-gradient(289deg, rgb(239 150 62) 14%, rgb(29 29 29 / 31%) 95%)
     );
   }
 

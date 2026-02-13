@@ -1,35 +1,55 @@
 <template>
   <div
-    class="app w-screen sm:w-[600px] max-w-2xl h-screen overflow-hidden bg-light dark:bg-dark relative"
+    class="app w-screen sm:w-[600px] max-w-2xl h-screen overflow-hidden bg-white dark:bg-dark relative"
   >
-    <musical-laoding />
+    <MusicalLaoding />
+    <Laoding/>
     <LayoutsHeader />
     <ProfileSidebar />
-    <main class="mx-auto px-4 h-screen overflow-auto">
+    <main class="mx-auto px-4 h-screen overflow-auto pb-70">
       <NuxtPage />
+      <FileUpload :class="marginBottomFileUpload" />
     </main>
     <LayoutsSearch />
     <LayoutsFooter />
-    <MusicPlayer/>
-
-
+    <MusicPlayer :isShowMusicPlayMini="isShowMusicPlayMini" />
   </div>
 </template>
 
 <script setup>
 import { useIndexStore } from "../stores/index";
+import { useSettingStore } from "~~/stores/setting";
 
+definePageMeta({
+  middleware: "auth",
+});
+
+const storeSetting = useSettingStore();
 const isOpenAsideMenu = ref(false),
   isOpenSearch = ref(false),
-  storeIndex = useIndexStore();
+  marginBottomFileUpload = ref(""),
+  isShowMusicPlayMini = ref(true);
 
-  defineShortcuts({
-  o: () => isOpenSearch.value = !isOpenSearch.value
-})
+defineShortcuts({
+  o: () => (isOpenSearch.value = !isOpenSearch.value),
+});
 
 useIndexStore().fetchGetSongs();
+
+watchEffect(() => {
+  if (useIndexStore().songSelected) {
+    isShowMusicPlayMini.value = "";
+    marginBottomFileUpload.value = "mb-20";
+  } else {
+    isShowMusicPlayMini.value = "hidden";
+    marginBottomFileUpload.value = "";
+  }
+});
+
 provide("isOpenAsideMenu", isOpenAsideMenu);
 provide("isOpenSearch", isOpenSearch);
+provide("storeSetting", storeSetting);
+
 useHead({
   title: "موزیکال | وب اپلیکیشن برتر پخش موزیک | ",
   meta: [

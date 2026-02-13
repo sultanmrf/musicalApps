@@ -1,33 +1,33 @@
-
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
-    token: null,
+    loading: false,
   }),
+
   actions: {
-    init() {
-      this.token = localStorage.getItem("token");
-      if (this.token) this.fetchUser();
-    },
-
     async fetchUser() {
-      const { data, error } = await useFetch("/api/auth/me", {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
+      this.loading = true;
+      try {
+        this.user = await $fetch("/api/auth/me", {
+          credentials: "include",
+        });
+      } catch {
+        this.user = null;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async login(payload) {
+      await $fetch("/api/auth/login", {
+        method: "POST",
+        body: payload,
       });
-      if (!error.value) this.user = data.value;
     },
 
-    setToken(token:string) {
-      this.token = token;
-      localStorage.setItem("token", token);
-    },
-
-    logout() {
+    async logout() {
+      await $fetch("/api/auth/logout");
       this.user = null;
-      this.token = null;
-      localStorage.removeItem("token");
     },
   },
 });

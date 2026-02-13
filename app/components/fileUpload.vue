@@ -1,96 +1,130 @@
 <template>
   <div
-    class="rounded-2xl z-10 absolute overflow-hidden bottom-45 right-3 bg-gray-300/40 backdrop-blur-sm transition-all duration-1500 text-center p-2 cursor-pointer leading-5 text-white"
-   :class="classes.parent">
-       <button :class="classes.btn" class="text-base" @click="showUpload(true)">upload</button>
-  
-      <label
+    class="rounded-2xl z-10 absolute overflow-hidden bottom-24 right-3 bg-white/10 backdrop-blur-xl shadow-2xl transition-all duration-700 text-center p-0 cursor-pointer text-white"
+    :class="classes.parent"
+    @dragover.prevent
+    @drop.prevent="handleDrop"
+  >
+    <button
+      :class="classes.btn"
+      class="text-sm w-full rounded-xl bg-gradient-to-r from-primary-300 to-primary-700 h-full"
+      @click="showUpload(true)"
+    >
+      <IconsUpload size="lg" class="text-white" />
+    </button>
+
+    <label
       for="uploadFile1"
       ref="onDropZone"
-      class="bg-transparent uploadFile py-4 text-gray-300 font-semibold text-base rounded flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed mx-auto font-[sans-serif]"
+      class="uploadFile py-14 px-4 m-3 rounded-xl flex flex-col items-center justify-center cursor-pointer border-3 border-dashed border-white/30 hover:border-primary-700 transition gap-3"
       :class="classes.labelUpload"
     >
-    <button class="w-10 h-10 text-base text-red-400" @click="showUpload(false)">close</button>
+      <button
+        class="absolute top-6 right-6 text-white text-md"
+        @click.stop="showUpload(false)"
+      >
+        ✕
+      </button>
+
       <UInput
         type="file"
         id="uploadFile1"
         size="sm"
         multiple
-        icon="i-heroicons-folder"
         class="hidden"
         @change="uploadAudioFiles"
         accept="audio/*"
       />
-      <img src="https://www.aparat.com/redesign/static/img/upload/upload-light.svg" alt="upload"/>
-     <span> بارگذاری موسیقی</span>
-      <p class="text-md font-medium text-white my-3">
-       فایل‌ صوتی خود را اینجا بکشید، یا با زدن آیکون بالا آن را انتخاب کنید.
+
+      <div
+        class="w-16 h-16 rounded-full bg-gradient-to-tr from-primary-200 to-primary-600 flex items-center justify-center text-3xl"
+      >
+        <IconsUpload size="lg" class="text-white" />
+      </div>
+
+      <span class="text-lg font-semibold"> Upload music </span>
+
+      <p class="text-sm text-gray-300">
+       Drag and drop or click the audio file
       </p>
+
+      <div v-if="audioFiles.length" class="text-green-400 text-xs mt-2">
+        {{ audioFiles.length }} File selected
+      </div>
     </label>
   </div>
 </template>
-
 <script setup>
-import { useIndexStore } from "../../stores/index";
+import { reactive, ref } from "vue";
+import { useIndexStore } from "~~/stores/index";
 
 let classes = reactive({
-  parent: "w-[4.5rem] h-[2.4rem]",
+  parent: "w-[3.5rem] h-[3.5rem]",
   btn: "visibility",
-  labelUpload: "invisiblity"
-}) 
+  labelUpload: "invisiblity",
+});
+
+let storeIndex = useIndexStore();
 
 const showUpload = (show) => {
-  if(show){
-   classes.parent = "w-[95%] h-[22rem]";
-   classes.btn = "invisiblity hidden";
-   classes.labelUpload = "visibility"
-  }else{
-   classes.parent = "w-[4.5rem] h-[2.4rem]";
-   classes.btn = "visibility";
-   classes.labelUpload = "invisiblity"
+  if (show) {
+    classes.parent = "w-[95%] h-[17rem]";
+    classes.btn = "hidden";
+    classes.labelUpload = "visibility";
+  } else {
+    classes.parent = "w-[3.5rem] h-[3.5rem]";
+    classes.btn = "visibility";
+    classes.labelUpload = "invisiblity";
   }
-}
+};
 
-let audioFiles = [];
+const audioFiles = ref([]);
+let storeSetting = inject("storeSetting");
 
 const uploadAudioFiles = async (event) => {
-  audioFiles = Array.from(event.currentTarget.files); // ذخیره فایل‌ها به‌صورت آرایه
+  audioFiles.value = Array.from(event.target.files);
+  sendFiles();
+};
 
-  if (!audioFiles.length) {
-    alert("لطفاً حداقل یک فایل انتخاب کنید.");
-    return;
-  }
+const handleDrop = (event) => {
+  audioFiles.value = Array.from(event.dataTransfer.files);
+  sendFiles();
+};
+
+const sendFiles = async () => {
+  if (!audioFiles.value.length) return;
 
   const formData = new FormData();
-  audioFiles.forEach((file, index) => {
+  audioFiles.value.forEach((file, index) => {
     formData.append(`audio_${index}`, file);
   });
 
   try {
-    fetchUploadFile(formData);
-    window.alert("فایل شما آپلود شد")
-  } catch (error) {
-    console.error("خطا در آپلود فایل‌ها:", error);
+    await fetchUploadFile(formData);
+    alert("🎶 فایل با موفقیت آپلود شد");
+    storeIndex.fetchGetSongs();
+  } catch (err) {
+    console.error(err);
   }
 };
 
 const fetchUploadFile = async (formData) => {
-  await $fetch("/api/files/upload", {
+  storeSetting.showloadingApi = true;
+  await useFetch("/api/files/upload", {
     "Content-Type": "multipart/form-data",
     method: "POST",
     body: formData,
   });
-  useIndexStore().fetchGetSongs();
+  storeSetting.showloadingApi = false;
 };
 </script>
 
+<style>
+.invisiblity {
+  visibility: hidden;
+}
 
-<style >
-  .invisiblity{
-   visibility: hidden; 
-  }
-
-  .visibility{
-    visibility: visible;
-  }
+.visibility {
+  visibility: visible;
+}
 </style>

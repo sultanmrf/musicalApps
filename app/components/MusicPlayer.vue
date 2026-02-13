@@ -1,25 +1,3 @@
-<script setup>
-import { ref } from "vue";
-import { useSettingStore } from "../stores/setting";
-import { useAudioStore } from "../stores/audio";
-import { useIndexStore } from "../stores/index";
-
-const storeSetting = useSettingStore(),
-  storeIndex = useIndexStore(),
-  storeAudio = useAudioStore();
-
-const items = [
-  [
-    {
-      label: "Profile",
-      avatar: {
-        src: "https://avatars.githubusercontent.com/u/739984?v=4",
-      },
-    },
-  ],
-];
-</script>
-
 <template>
   <!-- مدال پلیر بزرگ -->
   <div
@@ -33,9 +11,9 @@ const items = [
     <section class="section-show-music">
       <div class="section-header flex justify-between items-center">
         <ButtonsBtnOutline @click="storeSetting.setDataOpen(false)">
-          <UIcon
-            name="i-pepicons-pop:angle-down"
-            class="btn-close w-5 h-5 text-xl leading-[1.3rem]"
+          <IconsAngleDown
+            size="lg"
+            class="btn-close text-primary leading-[1.3rem]"
           />
         </ButtonsBtnOutline>
         <UDropdown
@@ -59,7 +37,7 @@ const items = [
           class="poster-music flex flex-col justify-center items-center my-2"
         >
           <EffectsMusicGramophone
-            :poster="storeIndex.getMusicSelected?.poster"
+            :poster="storeIndex.getMusicSelected?.poster.thumb"
             :runGramophone="
               storeIndex.songSelected?.status === 'play' ? true : false
             "
@@ -82,11 +60,11 @@ const items = [
               variant="ghost"
               class="group"
               v-if="storeAudio.volumeStatus"
+              @click="storeAudio.volumeSongs(false)"
             >
-              <UIcon
-                name="i-solar:volume-loud-broken"
-                class="w-10 h-10 text-3xl leading-[2.5rem] text-gray-800 dark:text-gray-200 group-hover:font-normal"
-                @click="storeAudio.volumeSongs(false)"
+              <IconsVolume
+                size="lg"
+                class="leading-[2.5rem] text-gray-800 dark:text-gray-200 group-hover:font-normal"
               />
             </UButton>
 
@@ -96,25 +74,25 @@ const items = [
               variant="ghost"
               class="group"
               v-else
+              @click="storeAudio.volumeSongs(true)"
             >
-              <UIcon
-                name="i-solar:volume-cross-outline"
-                class="w-10 h-10 text-3xl leading-[2.5rem] text-gray-800 dark:text-gray-200 group-hover:font-normal"
-                @click="storeAudio.volumeSongs(true)"
+              <IconsVolumeClose
+                size="lg"
+                class="leading-[2.5rem] text-gray-800 dark:text-gray-200 group-hover:font-normal"
               />
             </UButton>
 
             <Like />
 
             <UButton color="primary" square variant="ghost" class="group">
-              <UIcon
-                name="i-bi:folder-plus"
-                class="w-10 h-10 text-2xl leading-[2.5rem] text-gray-800 dark:text-gray-200 group-hover:font-normal"
+              <IconsFolderPlus
+                size="lg"
+                class="leading-[2.5rem] text-gray-800 dark:text-gray-200 group-hover:font-normal"
               />
             </UButton>
           </div>
           <div
-            class="progress-music relative flex justify-between flex-row-reverse my-10 mx-2"
+            class="progress-music relative flex justify-between flex-row-reverse my-10 mx-2 cursor-pointer"
           >
             <span
               class="time-current-music text-gray-300 absolute left-0 top-4"
@@ -131,11 +109,13 @@ const items = [
               {{ storeAudio.seekSliderSong.endTimeText }}
             </span>
           </div>
-          <div class="option-music flex justify-between flex-row-reverse items-center">
+          <div
+            class="option-music flex justify-between flex-row-reverse items-center"
+          >
             <UButton square variant="ghost" class="group">
-              <UIcon
-                name="i-hugeicons:repeat"
-                class="w-10 h-10 text-3xl leading-[2.5rem] rotate-180 text-gray-800 dark:text-gray-200 group-hover:font-normal"
+              <IconsRepeat
+                size="lg"
+                class="0 text-gray-800 dark:text-gray-200 group-hover:font-normal"
               />
             </UButton>
 
@@ -145,10 +125,7 @@ const items = [
               class="group"
               @click="storeAudio.nextSong"
             >
-              <UIcon
-                name="i-gravity-ui:forward-step"
-                class="w-10 h-10 text-3xl leading-[2.5rem] text-gray-800 dark:text-gray-200 group-hover:font-normal"
-              />
+              <IconsNext size="lg" class="text-white group-hover:font-black" />
             </UButton>
 
             <UButton
@@ -163,14 +140,11 @@ const items = [
               @click="
                 storeAudio.playSong(
                   storeIndex.songSelected?._id,
-                  storeIndex.songSelected?.path
+                  storeIndex.songSelected?.path,
                 )
               "
             >
-              <UIcon
-                name="i-solar:play-broken"
-                class="text-4xl group-hover:font-normal"
-              />
+              <IconsPlay size="lg" class="text-white group-hover:font-black" />
             </UButton>
 
             <UButton
@@ -181,10 +155,7 @@ const items = [
               class="group flex justify-center items-center rounded-full"
               @click="storeAudio.pauseSong(storeIndex.songSelected?._id)"
             >
-              <UIcon
-                name="i-solar:pause-broken"
-                class="text-4xl group-hover:font-normal"
-              />
+              <IconsPause size="lg" class="text-white group-hover:font-black" />
             </UButton>
 
             <UButton
@@ -193,10 +164,7 @@ const items = [
               class="group"
               @click="storeAudio.prevSong"
             >
-              <UIcon
-                name="i-gravity-ui:forward-step"
-                class="w-10 h-10 text-3xl leading-[2.5rem] rotate-180 text-gray-800 dark:text-gray-200 group-hover:font-normal"
-              />
+              <IconsPrev size="lg" class="text-white group-hover:font-black" />
             </UButton>
 
             <UButton
@@ -206,9 +174,9 @@ const items = [
               v-if="storeAudio.isShuffle === false"
               @click="storeAudio.activeAndUnactiveShuffleSongs(true)"
             >
-              <UIcon
-                name="i-zondicons:shuffle"
-                class="w-10 h-10 text-3xl leading-[2.5rem] text-gray-700 dark:text-gray-200 group-hover:font-normal"
+              <IconsShuffle
+                size="lg"
+                class="text-gray-700 dark:text-gray-200 leading-[2.5rem] group-hover:font-normal"
               />
             </UButton>
 
@@ -219,35 +187,35 @@ const items = [
               v-else
               @click="storeAudio.activeAndUnactiveShuffleSongs(false)"
             >
-              <UIcon
-                name="i-zondicons:shuffle"
-                class="w-10 h-10 text-3xl leading-[2.5rem] text-orange-700 dark:text-orange-200 group-hover:font-normal"
+              <IconsShuffle
+                size="lg"
+                class="leading-[2.5rem] text-primary-700 dark:text-primary-400 group-hover:font-normal"
               />
             </UButton>
           </div>
         </div>
       </div>
     </section>
-    <!-- باکس مدال که از پایین بالا می‌آید -->
-
-    <!---->
   </div>
 
   <!-- مینی پلیر پایین صفحه -->
-
   <UCard
     v-if="
       storeSetting.isOpenDrawerShowSong == false && storeAudio.idSongCurrentPlay
-    "    :ui="{
+    "
+    :ui="{
       root: 'absolute transition-all duration-1000 w-full bottom-20 left-0 bg-transparent dark:bg-transparent backdrop-blur-sm',
       body: 'sm:p-4',
     }"
+    :class="props.isShowMusicPlayMini"
   >
     <div class="grid grid-cols-3 gap-3">
-      <figure class="cursor-pointer flex gap-3 col-span-2"  @click="storeSetting.isOpenDrawerShowSong = true"
->
+      <figure
+        class="cursor-pointer flex gap-3 col-span-2"
+        @click="storeSetting.isOpenDrawerShowSong = true"
+      >
         <NuxtImg
-          :src="storeIndex.getMusicSelected?.poster"
+          :src="storeIndex.getMusicSelected?.poster.thumb"
           class="rounded-lg ring-2 ring-gray-300 dark:ring-gray-500 shadow-3d dark:shadow-3d-dark"
           quality="80"
           width="50"
@@ -275,13 +243,13 @@ const items = [
           @click="
             storeAudio.playSong(
               storeIndex.songSelected?._id,
-              storeIndex.songSelected?.path
+              storeIndex.songSelected?.path,
             )
           "
         >
-          <UIcon
-            name="i-solar:play-broken"
-            class="w-5 h-5 text-xl leading-[1.3rem] group-hover:font-black"
+          <IconsPlay
+            size="sm"
+            class="text-primary leading-[1.3rem] group-hover:font-black"
           />
         </UButton>
 
@@ -293,9 +261,9 @@ const items = [
           class="group"
           @click="storeAudio.pauseSong(storeIndex.songSelected?._id)"
         >
-          <UIcon
-            name="i-solar:pause-broken"
-            class="w-5 h-5 text-xl leading-[1.3rem] group-hover:font-black"
+          <IconsPause
+            size="sm"
+            class="text-primary leading-[1.3rem] group-hover:font-black"
           />
         </UButton>
         <UButton
@@ -305,9 +273,9 @@ const items = [
           class="group"
           @click="storeAudio.nextSong"
         >
-          <UIcon
-            name="i-gravity-ui:forward-step"
-            class="w-5 h-5 text-xl mx-1 leading-[1.3rem] group-hover:font-black"
+          <IconsNext
+            size="sm"
+            class="text-primary leading-[1.3rem] group-hover:font-black"
           />
         </UButton>
 
@@ -316,14 +284,42 @@ const items = [
           square
           variant="ghost"
           class="group"
-          @click="storeAudio.pauseSong(storeIndex.songSelected?._id)"
+          @click="closeMusicPlayer()"
         >
-          <UIcon
-            name="i-meteor-icons:xmark"
-            class="w-5 h-5 text-3xl mx-1 leading-[1.3rem] group-hover:font-black"
+          <IconsXmark
+            size="md"
+            class="text-primary leading-[1.3rem] group-hover:font-black"
           />
         </UButton>
       </div>
     </div>
   </UCard>
 </template>
+
+
+<script setup>
+import { useSettingStore } from "../../stores/setting";
+import { useAudioStore } from "../../stores/audio";
+import { useIndexStore } from "../../stores/index";
+
+const storeSetting = useSettingStore(),
+  storeIndex = useIndexStore(),
+  storeAudio = useAudioStore(),
+  props = defineProps(["isShowMusicPlayMini"]);
+
+const closeMusicPlayer = () => {
+  storeAudio.pauseSong(storeIndex.songSelected?._id)
+  storeAudio.closeMusic();
+};
+
+const items = [
+  [
+    {
+      label: "Profile",
+      avatar: {
+        src: "https://avatars.githubusercontent.com/u/739984?v=4",
+      },
+    },
+  ],
+];
+</script>

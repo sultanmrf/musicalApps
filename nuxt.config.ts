@@ -27,9 +27,6 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/main.css"],
-  vite: {
-    plugins: [tailwindcss(), tsconfigPaths()],
-  },
   runtimeConfig: {
     dburl: process.env.DATABASE_URI,
     dbName: process.env.DBNAME,

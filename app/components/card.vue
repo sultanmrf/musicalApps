@@ -1,6 +1,6 @@
 <template>
 
-    <div class="card w-full p-2 bg-transparent rounded-lg shadow text-dark dark:text-white">
+    <div class="card w-full bg-transparent rounded-2xl shadow text-dark dark:text-white">
        <slot/>
     </div>
 

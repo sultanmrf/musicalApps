@@ -6,5 +6,9 @@ export interface Song {
   size: number;
   status: string;
   context: string;
-  poster: string;
+  poster: {
+    large: string;
+    medium: string;
+    thumb: string;
+  };
 }

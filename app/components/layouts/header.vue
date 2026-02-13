@@ -3,20 +3,14 @@
     <nav class="menu flex items-center justify-between mx-auto px-4 py-5">
       <div class="flex">
         <ButtonsBtnOutline @click="isOpenAsideMenu = true">
-          <UIcon
-            name="i-fa7-solid:bars-staggered"
-            class="w-5 h-5 text-xl leading-[1.3rem]"
-          />
+          <IconsBars size="lg" class="leading-[1.3rem]" />
         </ButtonsBtnOutline>
         <ButtonsBtnOutline class="ms-3" @click="isDark = !isDark">
-          <UIcon
-            class="w-5 h-5 text-xl leading-[1.3rem]"
-            :name="
-              isDark ? 'i-bi:brightness-high-fill' : 'i-bi:brightness-high-fill'
-            "
-          />
+          <IconsLight v-if="isDark" size="lg" class="leading-[1.3rem]" />
+          <IconsDark v-else size="lg" class="leading-[1.3rem]" />
         </ButtonsBtnOutline>
       </div>
+
       <ULink to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img
           :src="`/images/${srcImgLogo}`"
@@ -27,10 +21,7 @@
         />
       </ULink>
       <ButtonsBtnOutline @click="isOpenSearch = true">
-        <UIcon
-          name="i-streamline:magnifying-glass"
-          class="w-5 h-5 text-xl leading-[1.3rem]"
-        />
+        <IconsSearch size="lg" class="leading-[1.3rem]" />
       </ButtonsBtnOutline>
     </nav>
   </header>

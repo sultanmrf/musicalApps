@@ -1,6 +1,6 @@
 <template>
     <section class="section-gramophone relative w-100 flex justify-center items-center">
-          <div class="section-page__gramophoe w-72 h-72 rounded-full bg-gray-800 border-8 border-gray-400 shadow-3d-dark flex justify-center items-center relative">
+          <div class="section-page__gramophoe  rounded-full  border-8 border-gray-400 shadow-3d-dark flex justify-center items-center relative">
             <NuxtImg :src="prop.poster" class="rounded-full ring-2 ring-gray-300 dark:ring-gray-500" quality="80"
                 width="350" height="350" ref="cardImg" :class="runGramophone ? 'animate-spain' : ''" />
 
@@ -35,8 +35,18 @@
     </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const prop = defineProps(['poster', 'runGramophone']);
+
+interface Music {
+  id: number
+  title: string
+  artist: string
+  image: string
+}
+
+
+let musics = ref<Music[]>([]);
 
 </script>
 

@@ -8,13 +8,10 @@
       <div
         class="w-16 h-16 flex justify-center items-center shadow-inset-light mx-1 leading-[1.3rem] group-hover:font-black mb-3 rounded-full bg-zinc-700"
       >
-        <UIcon
-          name="i-icon-park-outline:music-menu"
-          class="text-secondary size-8"
-        />
+        <IconsListMusic size="lg" icon-color="text-primary"/> 
       </div>
-      <h2 class="text-white text-xl">لیست پخش من</h2>
-      <span class="text-gray-400">21 آهنگ</span>
+      <h2 class="text-white text-xl">My playlist</h2>
+      <span class="text-gray-400">21 Music</span>
     </UButton>
     <UButton
       square
@@ -25,10 +22,10 @@
       <div
         class="w-16 h-16 flex justify-center items-center shadow-inset-light mx-1 leading-[1.3rem] group-hover:font-black mb-3 rounded-full bg-zinc-700"
       >
-        <UIcon name="i-solar:music-note-broken" class="text-secondary size-8" />
+        <IconsMusic size="lg" class="text-primary" />
       </div>
-      <h2 class="text-white text-xl">آهنگ های من</h2>
-      <span class="text-gray-400">10 آهنگ</span>
+      <h2 class="text-white text-xl">My Music</h2>
+      <span class="text-gray-400">10 Music</span>
     </UButton>
     <UButton
       square
@@ -39,13 +36,10 @@
       <div
         class="w-16 h-16 flex justify-center items-center shadow-inset-light mx-1 leading-[1.3rem] group-hover:font-black mb-3 rounded-full bg-zinc-700"
       >
-        <UIcon
-          name="i-solar:music-note-slider-2-outline"
-          class="text-secondary size-8"
-        />
+        <IconsMusicLibrary size="lg" class="text-primary" />
       </div>
-      <h2 class="text-white text-xl">آلبوم ها</h2>
-      <span class="text-gray-400">7 آهنگ</span>
+      <h2 class="text-white text-xl">Albums</h2>
+      <span class="text-gray-400">7 Music</span>
     </UButton>
     <UButton
       square
@@ -55,22 +49,28 @@
       <div
         class="w-16 h-16 flex justify-center items-center shadow-inset-light mx-1 leading-[1.3rem] group-hover:font-black mb-3 rounded-full bg-zinc-700"
       >
-        <UIcon
-          name="i-solar:music-library-2-broken"
-          class="text-secondary size-8"
-        />
+        <IconsMusicNote size="lg" class="text-primary" />
       </div>
-      <h2 class="text-white text-xl">پیشنهاد ها</h2>
-      <span class="text-gray-400">100 آهنگ</span>
+      <h2 class="text-white text-xl">Discover</h2>
+      <span class="text-gray-400">100 Music</span>
     </UButton>
 
-    <UNavigationMenu orientation="vertical" :items="items" class="rtl w-100 overflow-hidden">
+    <UNavigationMenu
+      orientation="vertical"
+      :items="items"
+      class="rtl w-100 overflow-hidden"
+    >
       <template #item="{ item }">
         <div class="text-lg py-3 flex items-center gap-2">
           <UIcon :name="item.icon" class="size-6" />
-          <span class="before:absolute before:right-[2.6rem] before:border-zinc-700 before:left-0 before:bottom-0
-           before:border-b-1">{{ item.label }}</span>
-           <UIcon name="i-ic:baseline-keyboard-arrow-left" class="absolute end-0"/>
+          <span
+            class="before:absolute before:right-[2.6rem] before:border-zinc-700 before:left-0 before:bottom-0 before:border-b-1"
+            >{{ item.label }}</span
+          >
+          <UIcon
+            name="i-ic:baseline-keyboard-arrow-left"
+            class="absolute end-0"
+          />
         </div>
       </template>
     </UNavigationMenu>
@@ -79,25 +79,26 @@
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
+
 const items = ref<NavigationMenuItem[][]>([
   [
     {
-      label: "دنبال کننده آهنگ",
+      label: "Followers",
       icon: "i-mdi:account-check-outline",
       to: "/songs",
     },
     {
-      label: "علاقه مندی ها",
+      label: "Favorites",
       icon: "i-akar-icons:heart",
       to: "/songs",
     },
     {
-      label: "آهنگ های جدید",
+      label: "New Releases",
       icon: "i-fluent-emoji-high-contrast:musical-notes",
       to: "/songs",
     },
     {
-      label: "اخیرا پخش شده",
+      label: "Recently Played",
       icon: "i-gridicons:history",
       to: "/songs",
     },
