@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { useIndexStore } from "../stores/index";
+import { useSongsStore } from "../stores/songs";
 import { useSettingStore } from "~~/stores/setting";
 
 definePageMeta({
@@ -25,6 +25,7 @@ definePageMeta({
 });
 
 const storeSetting = useSettingStore();
+const storeSongs = useSongsStore();
 const isOpenAsideMenu = ref(false),
   isOpenSearch = ref(false),
   marginBottomFileUpload = ref(""),
@@ -34,10 +35,11 @@ defineShortcuts({
   o: () => (isOpenSearch.value = !isOpenSearch.value),
 });
 
-useIndexStore().fetchGetSongs();
+useSongsStore().fetchSongs();
 
 watchEffect(() => {
-  if (useIndexStore().songSelected) {
+  if (useSongsStore().songSelected) {
+    debugger;
     isShowMusicPlayMini.value = "";
     marginBottomFileUpload.value = "mb-20";
   } else {
@@ -49,6 +51,7 @@ watchEffect(() => {
 provide("isOpenAsideMenu", isOpenAsideMenu);
 provide("isOpenSearch", isOpenSearch);
 provide("storeSetting", storeSetting);
+provide("storeSongs", storeSongs);
 
 useHead({
   title: "موزیکال | وب اپلیکیشن برتر پخش موزیک | ",

@@ -1,14 +1,14 @@
+import type { MediaPoster } from './media'
+
+export type SongStatus = 'waiting' | 'play' | 'stop';
+
 export interface Song {
   _id: string;
   fileName: string;
   path: string;
   type: string;
   size: number;
-  status: string;
+  status: SongStatus
   context: string;
-  poster: {
-    large: string;
-    medium: string;
-    thumb: string;
-  };
+  poster: MediaPoster;
 }

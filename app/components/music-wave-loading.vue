@@ -32,8 +32,8 @@ const prop = defineProps(['show']);
 .loading-wave {
     display: flex;
     position: absolute;
-    left: 10.7rem;
-    top: 4.7rem;
+    left: -13.7rem;
+    top: 4.4rem;
 
     .obj {
         width: 6px;

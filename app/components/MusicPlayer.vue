@@ -37,16 +37,16 @@
           class="poster-music flex flex-col justify-center items-center my-2"
         >
           <EffectsMusicGramophone
-            :poster="storeIndex.getMusicSelected?.poster.thumb"
+            :poster="storeSongs.getMusicSelected?.poster.thumb"
             :runGramophone="
-              storeIndex.songSelected?.status === 'play' ? true : false
+              storeSongs.songSelected?.status === 'play' ? true : false
             "
           />
 
           <h3
             class="poster-label text-gray-800 dark:text-white text-center text-xl my-4"
           >
-            {{ storeIndex.songSelected?.fileName }}
+            {{ storeSongs.songSelected?.fileName }}
             <span class="text-gray-400 block text-sm"></span>
           </h3>
         </div>
@@ -130,8 +130,8 @@
 
             <UButton
               v-if="
-                storeIndex.songSelected?.status == 'waiting' ||
-                storeIndex.songSelected?.status == 'stop'
+                storeSongs.songSelected?.status == 'waiting' ||
+                storeSongs.songSelected?.status == 'stop'
               "
               :ui="{ base: 'w-16 h-16' }"
               square
@@ -139,8 +139,8 @@
               class="group flex justify-center items-center rounded-full"
               @click="
                 storeAudio.playSong(
-                  storeIndex.songSelected?._id,
-                  storeIndex.songSelected?.path,
+                  storeSongs.songSelected?._id,
+                  storeSongs.songSelected?.path,
                 )
               "
             >
@@ -153,7 +153,7 @@
               square
               variant="solid"
               class="group flex justify-center items-center rounded-full"
-              @click="storeAudio.pauseSong(storeIndex.songSelected?._id)"
+              @click="storeAudio.pauseSong(storeSongs.songSelected?._id)"
             >
               <IconsPause size="lg" class="text-white group-hover:font-black" />
             </UButton>
@@ -215,7 +215,7 @@
         @click="storeSetting.isOpenDrawerShowSong = true"
       >
         <NuxtImg
-          :src="storeIndex.getMusicSelected?.poster.thumb"
+          :src="storeSongs.getMusicSelected?.poster.thumb"
           class="rounded-lg ring-2 ring-gray-300 dark:ring-gray-500 shadow-3d dark:shadow-3d-dark"
           quality="80"
           width="50"
@@ -225,7 +225,7 @@
         <figcaption
           class="flex flex-col justify-center items-baseline text-dark dark:text-white"
         >
-          <h4>{{ storeIndex.getMusicSelected?.fileName }}</h4>
+          <h4>{{ storeSongs.getMusicSelected?.fileName }}</h4>
           <span></span>
         </figcaption>
       </figure>
@@ -233,8 +233,8 @@
       <div class="btn-actions col-span-1 gap-2 flex justify-end items-center">
         <UButton
           v-if="
-            storeIndex.getMusicSelected?.status == 'waiting' ||
-            storeIndex.getMusicSelected?.status == 'stop'
+            storeSongs.getMusicSelected?.status == 'waiting' ||
+            storeSongs.getMusicSelected?.status == 'stop'
           "
           color="primary"
           square
@@ -242,8 +242,8 @@
           class="group"
           @click="
             storeAudio.playSong(
-              storeIndex.songSelected?._id,
-              storeIndex.songSelected?.path,
+              storeSongs.songSelected?._id,
+              storeSongs.songSelected?.path,
             )
           "
         >
@@ -259,7 +259,7 @@
           square
           variant="ghost"
           class="group"
-          @click="storeAudio.pauseSong(storeIndex.songSelected?._id)"
+          @click="storeAudio.pauseSong(storeSongs.songSelected?._id)"
         >
           <IconsPause
             size="sm"
@@ -300,15 +300,15 @@
 <script setup>
 import { useSettingStore } from "../../stores/setting";
 import { useAudioStore } from "../../stores/audio";
-import { useIndexStore } from "../../stores/index";
+import { useSongsStore } from "~~/stores/songs";
 
 const storeSetting = useSettingStore(),
-  storeIndex = useIndexStore(),
+  storeSongs = useSongsStore(),
   storeAudio = useAudioStore(),
   props = defineProps(["isShowMusicPlayMini"]);
 
 const closeMusicPlayer = () => {
-  storeAudio.pauseSong(storeIndex.songSelected?._id)
+  storeAudio.pauseSong(storeSongs.songSelected?._id)
   storeAudio.closeMusic();
 };
 

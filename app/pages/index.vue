@@ -25,7 +25,7 @@
         <IconsMusic size="lg" class="text-primary" />
       </div>
       <h2 class="text-white text-xl">My Music</h2>
-      <span class="text-gray-400">10 Music</span>
+      <span class="text-gray-400">{{ storeSongs.total }} Music</span>
     </UButton>
     <UButton
       square
@@ -79,6 +79,7 @@
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
+const storeSongs = inject("storeSongs");
 
 const items = ref<NavigationMenuItem[][]>([
   [

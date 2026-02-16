@@ -56,7 +56,7 @@
 </template>
 <script setup>
 import { reactive, ref } from "vue";
-import { useIndexStore } from "~~/stores/index";
+import { useSongsStore } from "~~/stores/songs";
 
 let classes = reactive({
   parent: "w-[3.5rem] h-[3.5rem]",
@@ -64,7 +64,7 @@ let classes = reactive({
   labelUpload: "invisiblity",
 });
 
-let storeIndex = useIndexStore();
+let storeSongs = useSongsStore();
 
 const showUpload = (show) => {
   if (show) {
@@ -102,7 +102,7 @@ const sendFiles = async () => {
   try {
     await fetchUploadFile(formData);
     alert("🎶 فایل با موفقیت آپلود شد");
-    storeIndex.fetchGetSongs();
+    storeSongs.fetchSongs();
   } catch (err) {
     console.error(err);
   }

@@ -1,7 +1,11 @@
+import { defineStore } from "pinia";
+import type { Song } from "~~/shared/types/song";
+
 export const useAlbumsStore = defineStore("albums", {
   state: () => ({
-    list: [],
-    posterAlbum: "",
+    list: [] as Array<{ name: string; poster: any; count: number }>,
+    posterAlbum: "",   // پوستر آلبوم خاص
+    nameAlbum: "",     // نام آلبوم خاص
     loading: false,
   }),
 
@@ -12,11 +16,14 @@ export const useAlbumsStore = defineStore("albums", {
       this.loading = false;
     },
 
-    async fetchAlbumSongs(album: string) {
-      let res = await $fetch(`/api/albums/${album}`);
-      this.posterAlbum =
-        res.map((album) => album.poster?.medium).find(Boolean) || null;
-      return res;
+    /**
+     * گرفتن اطلاعات آلبوم خاص
+     * @param albumSlug نام آلبوم
+     * @param songs لیست آهنگ‌ها از songsStore
+     */
+    setAlbumInfo(albumSlug: string, songs: Song[]) {
+      this.posterAlbum = songs.map((s) => s.poster?.medium).find(Boolean) || "";
+      this.nameAlbum = songs[0]?.album || albumSlug;
     },
   },
 });
