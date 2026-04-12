@@ -26,8 +26,8 @@ const props = withDefaults(
   defineProps<{
     size?: "sm" | "md" | "lg";
     text?: string;
-    textColor?: string;   // مثلا "text-red-500"
-    iconColor?: string;   // مثلا "text-blue-500"
+    textColor?: string;
+    iconColor?: string;
   }>(),
   {
     size: "md",

@@ -4,7 +4,7 @@ export type SongStatus = 'waiting' | 'play' | 'stop';
 
 export interface Song {
   _id: string;
-  fileName: string;
+  name: string;
   path: string;
   type: string;
   size: number;

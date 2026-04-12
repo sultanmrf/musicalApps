@@ -3,29 +3,16 @@
     @mousemove="handleMove"
     @mouseleave="resetTilt"
     :style="cardStyle"
-    class="card w-full 
-           text-dark dark:text-white 
-           relative p-3 mb-4 overflow-hidden
-           rounded-2xl
-           bg-white/5 dark:bg-white/5
-           backdrop-blur-xl
-           border border-white/10
-           transition-transform duration-200 ease-out
-           will-change-transform
-           shadow-[0_10px_30px_rgba(0,0,0,0.35)]"
-    :class="music.status === 'play'
-      ? 'ring-1 ring-primary/50 shadow-[0_0_25px_rgba(255,140,0,0.4)]'
-      : ''"
+    class="card w-full text-dark dark:text-white relative p-3 mb-4 overflow-hidden rounded-2xl bg-white/5 dark:bg-white/5 backdrop-blur-xl border border-white/10 transition-transform duration-200 ease-out will-change-transform shadow-[0_4px_8px_rgba(0,0,0,0.35)]"
+    :class="
+      music.status === 'play'
+        ? 'ring-1 ring-primary/50 shadow-[0_0_25px_rgba(255,140,0,0.4)]'
+        : ''
+    "
   >
-    <!-- Light Bar -->
     <div
       v-if="music.status === 'play'"
-      class="absolute bottom-0 left-0 w-full h-[3px]
-             bg-gradient-to-r
-             from-transparent
-             via-primary
-             to-transparent
-             animate-lightbar"
+      class="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent animate-lightbar"
     />
 
     <div class="grid grid-cols-3 gap-3">
@@ -35,8 +22,7 @@
           quality="80"
           width="70"
           height="70"
-          class="rounded-2xl ring-2 ring-gray-300 dark:ring-gray-500
-                 transition-transform duration-200"
+          class="rounded-2xl ring-2 ring-gray-300 dark:ring-gray-500 transition-transform duration-200"
           :style="innerStyle(30)"
         />
 
@@ -44,7 +30,7 @@
           class="flex flex-col justify-center transition-transform duration-200"
           :style="innerStyle(20)"
         >
-          <h4 class="font-semibold">{{ music.fileName }}</h4>
+          <h4 class="font-semibold w-[20rem] overflow-hidden text-ellipsis whitespace-nowrap">{{ music.name }}</h4>
           <span class="text-gray-400 text-sm">
             {{ music.artist }}
           </span>
@@ -80,6 +66,57 @@
           />
         </ButtonsBtnOutline>
 
+        <USlideover side="bottom">
+          <ButtonsBtnOutline color="primary" square class="group ms-3 me-2">
+            <iconsMenuList
+              size="sm"
+              class="text-primary group-hover:scale-110 transition"
+            />
+          </ButtonsBtnOutline>
+          <template #header class="rounded-t-lg">
+            <NuxtImg
+              :src="music.poster.thumb"
+              quality="80"
+              width="70"
+              height="70"
+              class="rounded-2xl ring-2 me-2 ring-gray-300 dark:ring-gray-500 transition-transform duration-200"
+              :style="innerStyle(30)"
+            />
+            <div class="flex text-white flex-col">
+              <span>{{ music.artist }}</span>
+            </div>
+          </template>
+
+          <template #body>
+            <NuxtLink
+              to="/about"
+              target="_blank"
+              class="flex itens-center gap-2 mb-5 hover:text-primary"
+            >
+              <IconsListMusic size="sm" icon-color="text-white" />
+              <span class="self-center">Add to playList</span>
+            </NuxtLink>
+
+            <NuxtLink
+              to="/about"
+              target="_blank"
+              class="flex itens-center gap-2 mb-5 hover:text-primary"
+            >
+              <IconsTrash size="sm" icon-color="text-white" />
+              <span class="self-center">Delete</span>
+            </NuxtLink>
+
+            <NuxtLink
+              to="/about"
+              target="_blank"
+              class="flex itens-center gap-2 hover:text-primary"
+            >
+              <IconsShare size="sm" icon-color="text-white" />
+              <span class="self-center">Share</span>
+            </NuxtLink>
+          </template>
+        </USlideover>
+
         <music-wave-loading :show="music.status === 'play'" />
       </div>
     </div>
@@ -94,14 +131,10 @@ import { useSongsStore } from "~~/stores/songs";
 import { useAudioStore } from "~~/stores/audio";
 import type { Song } from "~~/shared/types/song";
 
-const { music } = defineProps<{ music: Song }>()
+const { music, listSongs  } = defineProps<{ music: Song, listSongs:[Song] }>();
 const storeAudio = useAudioStore();
 const songsStore = useSongsStore();
 const storeSetting = inject("storeSetting");
-
-/* -----------------------
-   3D Tilt
-------------------------*/
 
 const tilt = ref({ x: 0, y: 0 });
 const isHover = ref(false);
@@ -129,7 +162,7 @@ const resetTilt = () => {
 const cardStyle = computed(() =>
   isHover.value
     ? `transform: perspective(900px) rotateX(${tilt.value.x}deg) rotateY(${tilt.value.y}deg);`
-    : `transform: perspective(900px) rotateX(0deg) rotateY(0deg);`
+    : `transform: perspective(900px) rotateX(0deg) rotateY(0deg);`,
 );
 
 const innerStyle = (depth: number) =>
@@ -137,11 +170,8 @@ const innerStyle = (depth: number) =>
     ? `transform: translateZ(${depth}px);`
     : `transform: translateZ(0px);`;
 
-/* -----------------------
-   Audio
-------------------------*/
-
 const runPlaySong = () => {
+  storeAudio.setListPlay(listSongs);
   storeAudio.playSong(music._id, music.path);
   songsStore.songSelected = music;
   storeSetting?.setDataOpen(true);
@@ -154,9 +184,18 @@ const runPauseAudio = () => {
 
 <style scoped>
 @keyframes lightbar {
-  0% { opacity: 0.3; transform: scaleX(0.6); }
-  50% { opacity: 1; transform: scaleX(1); }
-  100% { opacity: 0.3; transform: scaleX(0.6); }
+  0% {
+    opacity: 0.3;
+    transform: scaleX(0.6);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scaleX(0.6);
+  }
 }
 
 .animate-lightbar {

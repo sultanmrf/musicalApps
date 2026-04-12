@@ -1,19 +1,20 @@
 import { useSongsStore } from "./songs";
+import type { Song } from "~~/shared/types/song";
 
 export const useAudioStore = defineStore("audioStore", () => {
   const songsStore = useSongsStore();
-
   const song = ref<HTMLAudioElement | null>(null);
   const idSongCurrentPlay = ref<string | null>(null);
+  const listPlay = reactive({
+    songs: [] as Song[],
+  });
   const counterSong = ref(0);
   const timerInterval = ref<any>(null);
-
   const seekSliderSong = reactive({
     val: 0,
     currentTimeText: "00:00",
     endTimeText: "00:00",
   });
-
   const isShuffle = ref(false);
   const isReply = ref(false);
   const volumeStatus = ref(true);
@@ -37,8 +38,7 @@ export const useAudioStore = defineStore("audioStore", () => {
   const seekUpdate = () => {
     if (!song.value || isNaN(song.value.duration)) return;
 
-    const percent =
-      song.value.currentTime * (100 / song.value.duration);
+    const percent = song.value.currentTime * (100 / song.value.duration);
     seekSliderSong.val = Math.floor(percent);
 
     const format = (time: number) => {
@@ -55,8 +55,17 @@ export const useAudioStore = defineStore("audioStore", () => {
     seekSliderSong.endTimeText = format(song.value.duration);
 
     if (song.value.currentTime >= song.value.duration) {
-      nextSong();
+      if (isReply.value) {
+        song.value.currentTime = 0;
+        song.value.play();
+      } else {
+        nextSong();
+      }
     }
+  };
+
+  const setListPlay = (listSongs: [Song]) => {
+    listPlay.songs = listSongs;
   };
 
   const playSong = (musicId: string, src: string) => {
@@ -72,9 +81,9 @@ export const useAudioStore = defineStore("audioStore", () => {
     song.value.play();
     songsStore.changeStatus(musicId, "play");
     idSongCurrentPlay.value = musicId;
-    songsStore.songSelected =
-      songsStore.list.find((s) => s._id === musicId) || null;
 
+    songsStore.songSelected =
+      listPlay.songs?.find((s) => s._id === musicId) || null;
     timerInterval.value = setInterval(seekUpdate, 1000);
   };
 
@@ -87,19 +96,19 @@ export const useAudioStore = defineStore("audioStore", () => {
 
   const nextSong = () => {
     counterSong.value++;
-    if (counterSong.value > songsStore.list.length - 1) {
+    if (counterSong.value > listPlay.songs.length - 1) {
       counterSong.value = 0;
     }
-    const next = songsStore.list[counterSong.value];
+    const next = listPlay.songs[counterSong.value];
     playSong(next._id, next.path);
   };
 
   const prevSong = () => {
     counterSong.value--;
     if (counterSong.value < 0) {
-      counterSong.value = songsStore.list.length - 1;
+      counterSong.value = listPlay.songs.length - 1;
     }
-    const prev = songsStore.list[counterSong.value];
+    const prev = listPlay.songs[counterSong.value];
     playSong(prev._id, prev.path);
   };
 
@@ -107,10 +116,15 @@ export const useAudioStore = defineStore("audioStore", () => {
     songsStore.songSelected = null;
   };
 
+  const repeatMusic = () => {
+    isReply.value = !isReply.value;
+    if (song.value) song.value.loop = isReply.value;
+  };
+
   const activeAndUnactiveShuffleSongs = (status = true) => {
     isShuffle.value = status;
     if (status) {
-      songsStore.list.sort(() => Math.random() - 0.5);
+      listPlay.songs.sort(() => Math.random() - 0.5);
     }
   };
 
@@ -133,6 +147,8 @@ export const useAudioStore = defineStore("audioStore", () => {
     seekSliderSong,
     volumeSongs,
     volumeStatus,
+    repeatMusic,
     closeMusic,
+    setListPlay,
   };
 });

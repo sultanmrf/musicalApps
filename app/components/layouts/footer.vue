@@ -1,7 +1,7 @@
 <template>
   <footer
     class="absolute bottom-0 border-t-2 border-neutral-500 dark:border-t-0 left-0 z-20 h-20 w-full p-4 shadow flex items-center 
-    justify-between p-6 backdrop-blur-md bg-white dark:bg-[#1d1d1d]/40"
+    justify-between p-6 bg-white dark:bg-dark"
   >
     <ULink
       to="/"

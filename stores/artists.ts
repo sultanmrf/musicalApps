@@ -8,7 +8,6 @@ export const useArtistsStore = defineStore("artists", {
   actions: {
     async fetchArtists() {
       this.list = await $fetch("/api/artists");
-      debugger;
     },
 
     getArtistInfo(artistSlug: string, songs: any[]) {

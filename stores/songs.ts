@@ -20,7 +20,7 @@ export const useSongsStore = defineStore("songs", {
       this.list = data.map((s) => ({
         ...s,
         status: s.status || "waiting",
-      }));
+      })).reverse();
       this.total = this.list.length;
     },
 
@@ -45,7 +45,6 @@ export const useSongsStore = defineStore("songs", {
     },
 
     changeStatus(id: string, status: string) {
-      debugger;
       const song = this.list.find((s) => s._id === id);
       if (song) song.status = status;
     },

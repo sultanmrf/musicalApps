@@ -1,0 +1,55 @@
+<template>
+  <span v-if="text" :class="textColor" class="mr-2">
+    {{ text }}
+  </span>
+
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    :class="['inline-block', sizeClass, iconColor]"
+  >
+    <g
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+    >
+      <path stroke-linecap="round" d="M20.5 6h-17" />
+      <path
+        d="M6.5 6h.11a2 2 0 0 0 1.83-1.32l.034-.103l.097-.291c.083-.249.125-.373.18-.479a1.5 1.5 0 0 1 1.094-.788C9.962 3 10.093 3 10.355 3h3.29c.262 0 .393 0 .51.019a1.5 1.5 0 0 1 1.094.788c.055.106.097.23.18.479l.097.291A2 2 0 0 0 17.5 6"
+      />
+      <path
+        stroke-linecap="round"
+        d="M18.374 15.4c-.177 2.654-.266 3.981-1.131 4.79s-2.195.81-4.856.81h-.774c-2.66 0-3.99 0-4.856-.81c-.865-.809-.953-2.136-1.13-4.79l-.46-6.9m13.666 0l-.2 3"
+      />
+    </g>
+  </svg>
+</template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+
+const props = withDefaults(
+  defineProps<{
+    size?: "sm" | "md" | "lg";
+    text?: string;
+    textColor?: string; // مثلا "text-red-500"
+    iconColor?: string; // مثلا "text-blue-500"
+  }>(),
+  {
+    size: "md",
+    text: "",
+    textColor: "text-white",
+    iconColor: "text-white",
+  },
+);
+
+const sizeClass = computed(() => {
+  return {
+    sm: "w-5 h-5",
+    md: "w-7 h-7",
+    lg: "w-9 h-9",
+  }[props.size];
+});
+</script>

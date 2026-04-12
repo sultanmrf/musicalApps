@@ -90,7 +90,7 @@ const items = [
             <h3
               class="poster-label text-gray-800 dark:text-white text-center text-xl my-4"
             >
-              {{ storeSongs.songSelected.fileName }}
+              {{ storeSongs.songSelected.name }}
               <span class="text-gray-400 block text-sm"></span>
             </h3>
           </div>
@@ -332,7 +332,7 @@ const items = [
         <figcaption
           class="flex flex-col justify-center items-baseline text-dark dark:text-white"
         >
-          <h4>{{ storeSongs.getMusicSelected.fileName }}</h4>
+          <h4>{{ storeSongs.getMusicSelected.name }}</h4>
           <span></span>
         </figcaption>
       </figure>

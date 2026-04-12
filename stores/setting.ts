@@ -4,7 +4,8 @@ export const useSettingStore = defineStore('settingStore', {
     state: () => ({
         isOpenDrawerShowSong: false,
         showLoading: true,
-        showloadingApi: false
+        showloadingApi: false,
+        showModal: false
     }),
     getters: {
         getIsOpenDrawerShowSong(state) {

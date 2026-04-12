@@ -20,7 +20,7 @@ const posterSchema = new mongoose.Schema(
 
 const filesSchema = new mongoose.Schema(
   {
-    fileName: {
+    name: {
       type: String,
       required: true,
       trim: true

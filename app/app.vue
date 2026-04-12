@@ -3,7 +3,7 @@
     class="app w-screen sm:w-[600px] max-w-2xl h-screen overflow-hidden bg-white dark:bg-dark relative"
   >
     <MusicalLaoding />
-    <Laoding/>
+    <Laoding />
     <LayoutsHeader />
     <ProfileSidebar />
     <main class="mx-auto px-4 h-screen overflow-auto pb-70">
@@ -39,7 +39,6 @@ useSongsStore().fetchSongs();
 
 watchEffect(() => {
   if (useSongsStore().songSelected) {
-    debugger;
     isShowMusicPlayMini.value = "";
     marginBottomFileUpload.value = "mb-20";
   } else {

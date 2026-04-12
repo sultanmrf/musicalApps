@@ -16,18 +16,55 @@
             class="btn-close text-primary leading-[1.3rem]"
           />
         </ButtonsBtnOutline>
-        <UDropdown
-          :items="items"
-          :popper="{ arrow: true }"
-          :ui="{ wrapper: 'rtl' }"
-        >
-          <ButtonsBtnOutline>
-            <UIcon
-              name="i-lucide:ellipsis-vertical"
-              class="btn-info w-5 h-5 text-xl leading-[1.3rem]"
+        <USlideover side="bottom">
+          <ButtonsBtnOutline color="primary" square class="group ms-3 me-2">
+            <iconsMenuList
+              size="sm"
+              class="text-primary group-hover:scale-110 transition"
             />
           </ButtonsBtnOutline>
-        </UDropdown>
+          <template #header class="rounded-t-lg">
+            <NuxtImg
+              :src="storeSongs.getMusicSelected?.poster.thumb"
+              quality="80"
+              width="70"
+              height="70"
+              class="rounded-2xl ring-2 me-2 ring-gray-300 dark:ring-gray-500 transition-transform duration-200"
+            />
+            <div class="flex text-white flex-col">
+              <span>{{ storeSongs.songSelected?.artist }}</span>
+            </div>
+          </template>
+
+          <template #body>
+            <NuxtLink
+              to="/about"
+              target="_blank"
+              class="flex itens-center gap-2 mb-5 hover:text-primary"
+            >
+              <IconsListMusic size="sm" icon-color="text-white" />
+              <span class="self-center">Add to playList</span>
+            </NuxtLink>
+
+            <NuxtLink
+              to="/about"
+              target="_blank"
+              class="flex itens-center gap-2 mb-5 hover:text-primary"
+            >
+              <IconsTrash size="sm" icon-color="text-white" />
+              <span class="self-center">Delete</span>
+            </NuxtLink>
+
+            <NuxtLink
+              to="/about"
+              target="_blank"
+              class="flex itens-center gap-2 hover:text-primary"
+            >
+              <IconsShare size="sm" icon-color="text-white" />
+              <span class="self-center">Share</span>
+            </NuxtLink>
+          </template>
+        </USlideover>
       </div>
 
       <div
@@ -46,7 +83,7 @@
           <h3
             class="poster-label text-gray-800 dark:text-white text-center text-xl my-4"
           >
-            {{ storeSongs.songSelected?.fileName }}
+            {{ storeSongs.songSelected?.name }}
             <span class="text-gray-400 block text-sm"></span>
           </h3>
         </div>
@@ -112,10 +149,33 @@
           <div
             class="option-music flex justify-between flex-row-reverse items-center"
           >
-            <UButton square variant="ghost" class="group">
+            <UButton
+              v-if="storeAudio.isReply"
+              :isRepeat="false"
+              square
+              variant="ghost"
+              class="group"
+              @click="storeAudio.repeatMusic"
+            >
               <IconsRepeat
                 size="lg"
                 class="0 text-gray-800 dark:text-gray-200 group-hover:font-normal"
+                click=""
+              />
+            </UButton>
+
+            <UButton
+              v-else
+              square
+              variant="ghost"
+              class="group"
+              @click="storeAudio.repeatMusic"
+            >
+              <IconsRepeat
+                :isRepeat="true"
+                size="lg"
+                class="0 text-gray-800 dark:text-gray-200 group-hover:font-normal"
+                click=""
               />
             </UButton>
 
@@ -125,7 +185,7 @@
               class="group"
               @click="storeAudio.nextSong"
             >
-              <IconsNext size="lg" class="text-white group-hover:font-black" />
+              <IconsNext size="lg" />
             </UButton>
 
             <UButton
@@ -164,7 +224,7 @@
               class="group"
               @click="storeAudio.prevSong"
             >
-              <IconsPrev size="lg" class="text-white group-hover:font-black" />
+              <IconsPrev size="lg" />
             </UButton>
 
             <UButton
@@ -211,23 +271,49 @@
   >
     <div class="grid grid-cols-3 gap-3">
       <figure
-        class="cursor-pointer flex gap-3 col-span-2"
+        class="cursor-pointer flex gap-3 col-span-2 items-center"
         @click="storeSetting.isOpenDrawerShowSong = true"
       >
-        <NuxtImg
-          :src="storeSongs.getMusicSelected?.poster.thumb"
-          class="rounded-lg ring-2 ring-gray-300 dark:ring-gray-500 shadow-3d dark:shadow-3d-dark"
-          quality="80"
-          width="50"
-          height="50"
-          ref="cardImg"
-        />
-        <figcaption
-          class="flex flex-col justify-center items-baseline text-dark dark:text-white"
-        >
-          <h4>{{ storeSongs.getMusicSelected?.fileName }}</h4>
-          <span></span>
-        </figcaption>
+        <!-- Wrapper برای افکت متحرک -->
+        <div class="relative w-[50px] h-[50px] flex-shrink-0">
+          <!-- 🔥 Glow متحرک با رنگ نارنجی gradient -->
+          <div
+            class="absolute -inset-2 rounded-xl opacity-70 blur-lg animate-pulse-x"
+            style="
+              background: linear-gradient(45deg, #ef963e, #ffc88d, #ef963e);
+            "
+          ></div>
+
+          <!-- عکس اصلی -->
+          <NuxtImg
+            :src="storeSongs.getMusicSelected?.poster.thumb"
+            class="relative z-10 rounded-lg ring-2 ring-gray-300 dark:ring-gray-500 shadow-lg"
+            quality="80"
+            width="50"
+            height="50"
+            ref="cardImg"
+          />
+        </div>
+
+        <div class="flex flex-col justify-center gap-2 w-full">
+          <figcaption
+            class="flex flex-col justify-center items-baseline text-dark dark:text-white"
+          >
+            <h4
+              class="w-[20rem] overflow-hidden text-ellipsis whitespace-nowrap"
+            >
+              {{ storeSongs.getMusicSelected?.name }}
+            </h4>
+          </figcaption>
+
+          <USlider
+            color="primary"
+            :min="0"
+            :max="100"
+            v-model="storeAudio.timeSong"
+            :ui="{ wrapper: 'ltr' }"
+          />
+        </div>
       </figure>
 
       <div class="btn-actions col-span-1 gap-2 flex justify-end items-center">
@@ -273,10 +359,7 @@
           class="group"
           @click="storeAudio.nextSong"
         >
-          <IconsNext
-            size="sm"
-            class="text-primary leading-[1.3rem] group-hover:font-black"
-          />
+          <IconsNext size="sm" iconColor="text-primary" />
         </UButton>
 
         <UButton
@@ -296,7 +379,6 @@
   </UCard>
 </template>
 
-
 <script setup>
 import { useSettingStore } from "../../stores/setting";
 import { useAudioStore } from "../../stores/audio";
@@ -308,18 +390,24 @@ const storeSetting = useSettingStore(),
   props = defineProps(["isShowMusicPlayMini"]);
 
 const closeMusicPlayer = () => {
-  storeAudio.pauseSong(storeSongs.songSelected?._id)
+  storeAudio.pauseSong(storeSongs.songSelected?._id);
   storeAudio.closeMusic();
 };
-
-const items = [
-  [
-    {
-      label: "Profile",
-      avatar: {
-        src: "https://avatars.githubusercontent.com/u/739984?v=4",
-      },
-    },
-  ],
-];
 </script>
+<style scoped>
+@keyframes pulse-x {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.animate-pulse-x {
+  animation: pulse-x 2s ease-in-out infinite;
+}
+</style>

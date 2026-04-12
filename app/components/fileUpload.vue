@@ -56,8 +56,10 @@
 </template>
 <script setup>
 import { reactive, ref } from "vue";
+import { useRoute } from "vue-router";
 import { useSongsStore } from "~~/stores/songs";
 
+const router = useRouter()
 let classes = reactive({
   parent: "w-[3.5rem] h-[3.5rem]",
   btn: "visibility",
@@ -95,22 +97,26 @@ const sendFiles = async () => {
   if (!audioFiles.value.length) return;
 
   const formData = new FormData();
-  audioFiles.value.forEach((file, index) => {
-    formData.append(`audio_${index}`, file);
+
+  audioFiles.value.forEach((file) => {
+    formData.append("file", file);
   });
 
   try {
     await fetchUploadFile(formData);
     alert("🎶 فایل با موفقیت آپلود شد");
     storeSongs.fetchSongs();
+    router.push("/songs");
+    showUpload(false);
   } catch (err) {
     console.error(err);
   }
 };
 
+
 const fetchUploadFile = async (formData) => {
   storeSetting.showloadingApi = true;
-  await useFetch("/api/files/upload", {
+  await useFetch("/api/upload/music", {
     "Content-Type": "multipart/form-data",
     method: "POST",
     body: formData,

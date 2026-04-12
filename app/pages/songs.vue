@@ -2,13 +2,10 @@
   <TabLinks />
 
   <div class="flex items-center justify-between w-full my-2">
-    <buttons-btn-default class="flex w-auto h-10 text-primary">
-      <font-awesome-icon icon="fal fa-arrow-down-arrow-up me-2" />
-      Sorting
-    </buttons-btn-default>
     <span class="total-songs text-gray-600 dark:text-light">
-      Songs {{ songsStore.total }}
+      {{ songsStore.total }} Songs
     </span>
+   <FiltersSortFilter/>
   </div>
 
   <div v-if="songsStore.list.length > 0">
@@ -16,6 +13,7 @@
       v-for="music in songsStore.list"
       :key="music._id"
       :music="music"
+      :listSongs="songsStore.list"
     />
   </div>
 </template>

@@ -1,14 +1,18 @@
 <template>
-  <div class="flex flex-wrap justify-center gap-6 pb-48 relative pt-2">
+  <div class="flex flex-wrap justify-center gap-6 relative pt-2">
     <UButton
       square
       variant="solid"
-      class="group w-40 h-40 xs:p-8 bg-linear-to-b from-zinc-700 to-zinc-800 shadow-lg min-[450px]:w-48 min-[450px]:h-48 flex flex-col justify-center align-center relative rounded-lg before:absolute before:bg-zinc-800 hover:before:bg-primary hover:shadow-secondary transition-all before:w-20 before:h-2.5 before:top-[-9px] before:right-[14px] before:rounded-t-lg"
+      class="group w-40 h-40 xs:p-8 bg-linear-to-b from-zinc-700 to-zinc-800 shadow-lg 
+      min-[450px]:w-48 min-[450px]:h-48 flex flex-col justify-center align-center relative 
+      rounded-lg before:absolute before:bg-zinc-800 hover:before:bg-primary hover:shadow-secondary
+       transition-all before:w-20 before:h-2.5 before:top-[-9px] before:right-[14px] before:rounded-t-lg"
+       to="/playList"
     >
       <div
         class="w-16 h-16 flex justify-center items-center shadow-inset-light mx-1 leading-[1.3rem] group-hover:font-black mb-3 rounded-full bg-zinc-700"
       >
-        <IconsListMusic size="lg" icon-color="text-primary"/> 
+        <IconsListMusic size="lg" icon-color="text-primary" />
       </div>
       <h2 class="text-white text-xl">My playlist</h2>
       <span class="text-gray-400">21 Music</span>
@@ -79,6 +83,7 @@
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
+import Scene from "~/components/scene.vue";
 const storeSongs = inject("storeSongs");
 
 const items = ref<NavigationMenuItem[][]>([
