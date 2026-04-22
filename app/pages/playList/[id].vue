@@ -7,7 +7,7 @@
         class="section-poster relative group overflow-hidden rounded-bl-[6rem]"
       >
         <NuxtImg
-          :src="poster"
+          :src="currentPlaylist.cover"
           width="600"
           height="350"
           format="webp"
@@ -17,14 +17,6 @@
         <div
           class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         ></div>
-
-        <div
-          class="flex flex-nowrap text-white text-sm gap-1 p-3 absolute bottom-3 right-3 bg-white/30 rounded-xl shadow-lg backdrop-blur-[0.3rem] border border-white/50"
-        >
-          1 Artist
-          <span class="mx-2">|</span>
-          {{ artistSongs.length }} Songs
-        </div>
       </div>
 
       <UButton
@@ -39,7 +31,7 @@
       <h1
         class="mt-5 text-2xl text-center text-dark dark:text-white font-semibold"
       >
-        {{ artistName }}
+        {{ currentPlaylist.name }}
       </h1>
     </div>
 
@@ -47,32 +39,18 @@
       <h2 class="text-xl font-semibold mb-3">Songs</h2>
 
       <CardsCardMusic
-        v-for="song in artistSongs"
+        v-for="song in currentPlaylist.songs"
         :key="song._id"
         :music="song"
-        :listSongs="artistSongs"
+        :listSongs="currentPlaylist.songs"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useAudioStore } from "~~/stores/audio";
-
 const route = useRoute();
-const audioStore = useAudioStore();
+const { getPlaylist, currentPlaylist } = usePlaylist();
 
-const { artistDetails } = useArtists();
-
-const {
-  artistSongs,
-  poster,
-  name: artistName,
-} = await artistDetails(route.params.slug as string);
-
-const playAll = () => {
-  if (artistSongs.length > 0) {
-    audioStore.playSong(artistSongs[0]._id, artistSongs[0].path);
-  }
-};
+await getPlaylist(route.params.id as string);
 </script>

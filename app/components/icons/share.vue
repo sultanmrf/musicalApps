@@ -1,8 +1,4 @@
 <template>
-  <span v-if="text" :class="textColor" class="mr-2">
-    {{ text }}
-  </span>
-
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -25,6 +21,10 @@
       />
     </g>
   </svg>
+
+  <span v-if="text" :class="textColor" class="mr-2">
+    {{ text }}
+  </span>
 </template>
 
 <script setup lang="ts">

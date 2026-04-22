@@ -1,5 +1,5 @@
 <template>
-  <div class="container backdrop-blur-md" v-if="storeSetting.showloadingApi">
+  <div class="container backdrop-blur-md" v-if="isLoading">
     <div class="loader">
       <div class="cube"></div>
       <div class="cube"></div>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-let storeSetting = inject("storeSetting");
+let { isLoading } = useLoading();
 </script>
 
 <style scoped>

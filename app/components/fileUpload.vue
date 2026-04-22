@@ -44,9 +44,7 @@
 
       <span class="text-lg font-semibold"> Upload music </span>
 
-      <p class="text-sm text-gray-300">
-       Drag and drop or click the audio file
-      </p>
+      <p class="text-sm text-gray-300">Drag and drop or click the audio file</p>
 
       <div v-if="audioFiles.length" class="text-green-400 text-xs mt-2">
         {{ audioFiles.length }} File selected
@@ -59,7 +57,9 @@ import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useSongsStore } from "~~/stores/songs";
 
-const router = useRouter()
+const router = useRouter();
+const { request } = useApi();
+
 let classes = reactive({
   parent: "w-[3.5rem] h-[3.5rem]",
   btn: "visibility",
@@ -113,15 +113,12 @@ const sendFiles = async () => {
   }
 };
 
-
 const fetchUploadFile = async (formData) => {
-  storeSetting.showloadingApi = true;
-  await useFetch("/api/upload/music", {
+  await request("/api/upload/music", {
     "Content-Type": "multipart/form-data",
     method: "POST",
     body: formData,
   });
-  storeSetting.showloadingApi = false;
 };
 </script>
 

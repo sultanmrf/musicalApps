@@ -30,7 +30,11 @@
           class="flex flex-col justify-center transition-transform duration-200"
           :style="innerStyle(20)"
         >
-          <h4 class="font-semibold w-[20rem] overflow-hidden text-ellipsis whitespace-nowrap">{{ music.name }}</h4>
+          <h4
+            class="font-semibold w-[20rem] overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            {{ music.name }}
+          </h4>
           <span class="text-gray-400 text-sm">
             {{ music.artist }}
           </span>
@@ -66,56 +70,12 @@
           />
         </ButtonsBtnOutline>
 
-        <USlideover side="bottom">
-          <ButtonsBtnOutline color="primary" square class="group ms-3 me-2">
-            <iconsMenuList
-              size="sm"
-              class="text-primary group-hover:scale-110 transition"
-            />
-          </ButtonsBtnOutline>
-          <template #header class="rounded-t-lg">
-            <NuxtImg
-              :src="music.poster.thumb"
-              quality="80"
-              width="70"
-              height="70"
-              class="rounded-2xl ring-2 me-2 ring-gray-300 dark:ring-gray-500 transition-transform duration-200"
-              :style="innerStyle(30)"
-            />
-            <div class="flex text-white flex-col">
-              <span>{{ music.artist }}</span>
-            </div>
-          </template>
+        <SideOversSongOptionsSideOver
+          :poster="music.poster.thumb"
+          :artist="music.artist"
+        />
 
-          <template #body>
-            <NuxtLink
-              to="/about"
-              target="_blank"
-              class="flex itens-center gap-2 mb-5 hover:text-primary"
-            >
-              <IconsListMusic size="sm" icon-color="text-white" />
-              <span class="self-center">Add to playList</span>
-            </NuxtLink>
-
-            <NuxtLink
-              to="/about"
-              target="_blank"
-              class="flex itens-center gap-2 mb-5 hover:text-primary"
-            >
-              <IconsTrash size="sm" icon-color="text-white" />
-              <span class="self-center">Delete</span>
-            </NuxtLink>
-
-            <NuxtLink
-              to="/about"
-              target="_blank"
-              class="flex itens-center gap-2 hover:text-primary"
-            >
-              <IconsShare size="sm" icon-color="text-white" />
-              <span class="self-center">Share</span>
-            </NuxtLink>
-          </template>
-        </USlideover>
+        <SideOversAddToPlayListSideOver />
 
         <music-wave-loading :show="music.status === 'play'" />
       </div>
@@ -130,8 +90,9 @@ import { ref, computed, inject } from "vue";
 import { useSongsStore } from "~~/stores/songs";
 import { useAudioStore } from "~~/stores/audio";
 import type { Song } from "~~/shared/types/song";
+import SongOptionsSideOver from "../sideOvers/songOptionsSideOver.vue";
 
-const { music, listSongs  } = defineProps<{ music: Song, listSongs:[Song] }>();
+const { music, listSongs } = defineProps<{ music: Song; listSongs: [Song] }>();
 const storeAudio = useAudioStore();
 const songsStore = useSongsStore();
 const storeSetting = inject("storeSetting");
@@ -181,25 +142,3 @@ const runPauseAudio = () => {
   storeAudio.pauseSong(music._id);
 };
 </script>
-
-<style scoped>
-@keyframes lightbar {
-  0% {
-    opacity: 0.3;
-    transform: scaleX(0.6);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-  100% {
-    opacity: 0.3;
-    transform: scaleX(0.6);
-  }
-}
-
-.animate-lightbar {
-  animation: lightbar 2s ease-in-out infinite;
-  transform-origin: center;
-}
-</style>

@@ -1,34 +1,52 @@
-export const usePlaylist = () => {
-  const playlists = ref([]);
+const playlists = ref([]);
+const currentPlaylist = ref<any>(null);
+const { request } = useApi();
 
+export const usePlaylist = () => {
   const createPlaylist = async (data: object) => {
-    return await $fetch("/api/playlist/create", {
+    return await request("/api/playList/create", {
       method: "POST",
       body: data,
     });
   };
 
   const addSong = async (data: object) => {
-    return await $fetch("/api/playlist/add", {
+    return await request("/api/playList/add", {
       method: "POST",
       body: data,
     });
   };
 
-  const getPlaylist = async (id: number) => {
-    return await $fetch(`/api/playlist/${id}`);
+  const getPlaylist = async (id: string) => {
+    const { data, error } = await request(`/api/playList/${id}`);
+
+    if (data.value) {
+      currentPlaylist.value = data.value;
+    } else {
+      console.error("Error:", error.value);
+    }
   };
 
   const getAllPlaylist = async () => {
-    const res = await $fetch(`/api/playList`);
-    playlists.value = res;
+    const { data, error } = await request(`/api/playList`);
+    if (data.value) {
+      playlists.value = data.value;
+    } else {
+      console.error("Error:", error.value);
+    }
+  };
+
+  const addPlaylist = (item: any) => {
+    playlists.value.unshift(item);
   };
 
   return {
     playlists,
+    currentPlaylist,
     createPlaylist,
     addSong,
     getPlaylist,
     getAllPlaylist,
+    addPlaylist,
   };
 };

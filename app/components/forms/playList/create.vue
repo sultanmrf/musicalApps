@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-const { createPlaylist, getAllPlaylist } = usePlaylist();
+const { createPlaylist, addPlaylist } = usePlaylist();
 let storeSetting = inject("storeSetting");
 const form = reactive({
   name: "",
@@ -59,14 +59,14 @@ const submitHandel = async () => {
     cover = uploaded.path;
   }
 
-  await createPlaylist({
+  const { data } = await createPlaylist({
     name: form.name,
     description: form.description,
     cover,
     userId: FAKE_USER_ID,
   });
 
-  await getAllPlaylist();
+  addPlaylist(data.value);
   storeSetting.showModal = false;
 };
 </script>

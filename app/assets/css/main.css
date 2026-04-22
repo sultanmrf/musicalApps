@@ -101,6 +101,26 @@
   div[drawer-backdrop] {
     background: transparent;
   }
+
+  @keyframes lightbar {
+    0% {
+      opacity: 0.3;
+      transform: scaleX(0.6);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    100% {
+      opacity: 0.3;
+      transform: scaleX(0.6);
+    }
+  }
+
+  .animate-lightbar {
+    animation: lightbar 2s ease-in-out infinite;
+    transform-origin: center;
+  }
 }
 
 @theme {
