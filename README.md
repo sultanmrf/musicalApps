@@ -1,75 +1,41 @@
-# Nuxt Minimal Starter
+# 🎵 3D Musical Player
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+یک موزیک‌پلیر حرفه‌ای، مدرن و سه‌بعدی ساخته‌شده با **Nuxt.js + Vue + TailwindCSS + MongoDB**
 
-## Setup
+> این پروژه یک موزیک‌پلیر نسل جدید است که تمرکز آن روی طراحی چشم‌نواز، انیمیشن‌های سینمایی، رندر سه‌بعدی و تجربه کاربری روان است.  
+> بخش سه‌بعدی بر پایه WebGL / Three.js خواهد بود و به‌صورت کامل با UI هماهنگ می‌شود.
 
-Make sure to install dependencies:
+---
 
-```bash
-# npm
-npm install
+## 🚀 ویژگی‌های اصلی پروژه
 
-# pnpm
-pnpm install
+- 🎧 پخش موزیک با کنترل کامل (Play / Pause / Next / Previous / Seek)
+- 🎚 اکولایزر متحرک (Animated Audio Visualizer)
+- 📀 نمایش سه‌بعدی کاور موزیک (در مرحله‌ی توسعه)
+- 🎼 مدیریت آلبوم‌ها و هنرمندان
+- 📁 سیستم دیتابیس با **MongoDB + Mongoose**
+- ⚡ طراحی مدرن و ریسپانسیو با **TailwindCSS**
+- 🌙 تم دارک کامل
+- ⚙ ساختار ماژولار و قابل توسعه با Nuxt 3
 
-# yarn
-yarn install
+---
 
-# bun
-bun install
-```
+## 🛠 تکنولوژی‌های استفاده‌شده
 
-## Development Server
+- **Nuxt.js 3**
+- **Vue 3 (Composition API)**
+- **TailwindCSS**
+- **Pinia** جهت مدیریت state
+- **MongoDB + Mongoose**
+- **Three.js (برای بخش سه‌بعدی)**
 
-Start the development server on `http://localhost:3000`:
+---
 
-```bash
-# npm
-npm run dev
+## 📦 نصب و اجرای پروژه
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
+### 1. کلون کردن پروژه
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+git clone https://github.com/your-username/musicalApps.git
+cd musicalApps
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
