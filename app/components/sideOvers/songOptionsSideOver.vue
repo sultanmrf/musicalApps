@@ -9,7 +9,10 @@
       <iconsMenuList size="sm" class="text-primary" />
     </ButtonsBtnOutline>
 
-    <USlideover side="bottom" v-model:open="isVisible">
+    <USlideover
+      side="bottom"
+      v-model:open="isVisible"
+    >
       <template #header>
         <NuxtImg :src="poster" width="70" height="70" class="rounded-2xl" />
         <div class="flex text-white flex-col">
