@@ -4,15 +4,13 @@
   >
     <div class="section-album relative w-full max-w-4xl">
       <div
-        class="section-poster relative group overflow-hidden rounded-bl-[6rem]"
+        class="section-poster relative group overflow-hidden rounded-bl-[6rem] h-[330px]"
       >
         <NuxtImg
           :src="poster"
-          width="600"
-          height="350"
           format="webp"
           quality="90"
-          class="object-cover transition-all duration-500 ease-out group-hover:scale-105 group-hover:brightness-110"
+          class="w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105 group-hover:brightness-110"
         />
         <div
           class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"

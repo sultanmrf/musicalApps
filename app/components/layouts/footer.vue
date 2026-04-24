@@ -47,10 +47,10 @@
     </ULink>
 
     <ULink
-      to="/"
+      to="/playList"
       class="group flex-column w-10 h-10 justify-center text-center cursor-pointer"
     >
-      <IconsSearch
+      <IconsListMusic
         size="lg"
         :class="route.name == 'search' ? 'text-primary' : 'dark:text-white text-dark'" class="hover:text-primary"
       />
