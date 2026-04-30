@@ -75,7 +75,7 @@
           :artist="music.artist"
         />
 
-        <SideOversAddToPlayListSideOver />
+        <SideOversAddToPlayListSideOver :song-id="music._id" />
 
         <music-wave-loading :show="music.status === 'play'" />
       </div>
