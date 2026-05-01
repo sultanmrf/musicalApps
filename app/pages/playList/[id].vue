@@ -7,7 +7,7 @@
         class="section-poster relative group overflow-hidden rounded-bl-[6rem]"
       >
         <NuxtImg
-          :src="currentPlaylist.cover"
+          :src="currentPlaylist.cover.thumb"
           width="600"
           height="350"
           format="webp"
@@ -23,7 +23,6 @@
         color="primary"
         variant="solid"
         class="!rounded-full w-14 h-14 absolute bottom-10 left-6 shadow-[0_8px_0_rgba(239,150,62,0.7),0_14px_25px_rgba(239,150,62,0.45)] transition-all duration-150 hover:-translate-y-1 active:translate-y-1"
-        @click="playAll"
       >
         <IconsPlay size="lg" />
       </UButton>

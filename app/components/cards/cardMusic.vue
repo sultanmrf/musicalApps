@@ -70,12 +70,13 @@
           />
         </ButtonsBtnOutline>
 
-        <SideOversSongOptionsSideOver
-          :poster="music.poster.thumb"
-          :artist="music.artist"
-        />
+        <ButtonsBtnOutline @click="openOptions" class="group ms-3 me-2">
+          <iconsMenuList size="sm" class="text-primary" />
+        </ButtonsBtnOutline>
 
-        <SideOversAddToPlayListSideOver :song-id="music._id" />
+        <SideOversSongOptionsSideOver />
+
+        <SideOversAddToPlayListSideOver />
 
         <music-wave-loading :show="music.status === 'play'" />
       </div>
@@ -90,13 +91,14 @@ import { ref, computed, inject } from "vue";
 import { useSongsStore } from "~~/stores/songs";
 import { useAudioStore } from "~~/stores/audio";
 import type { Song } from "~~/shared/types/song";
-import SongOptionsSideOver from "../sideOvers/songOptionsSideOver.vue";
+import { useUiStore } from "~~/stores/ui";
 
+const ui = useUiStore();
+const overlay = useOverlayManager();
 const { music, listSongs } = defineProps<{ music: Song; listSongs: [Song] }>();
 const storeAudio = useAudioStore();
 const songsStore = useSongsStore();
 const storeSetting = inject("storeSetting");
-
 const tilt = ref({ x: 0, y: 0 });
 const isHover = ref(false);
 
@@ -130,6 +132,11 @@ const innerStyle = (depth: number) =>
   isHover.value
     ? `transform: translateZ(${depth}px);`
     : `transform: translateZ(0px);`;
+
+const openOptions = () => {
+  ui.setSong(music._id);
+  overlay.open("songOptionsSideOver");
+};
 
 const runPlaySong = () => {
   storeAudio.setListPlay(listSongs);

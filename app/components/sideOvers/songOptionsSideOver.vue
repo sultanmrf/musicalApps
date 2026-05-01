@@ -1,22 +1,17 @@
 <template>
   <div>
-    <ButtonsBtnOutline
-      color="primary"
-      square
-      class="group ms-3 me-2"
-      @click="overlay.toggle('songOptionsSideOver')"
-    >
-      <iconsMenuList size="sm" class="text-primary" />
-    </ButtonsBtnOutline>
-
-    <USlideover
-      side="bottom"
-      v-model:open="isVisible"
-    >
+    <USlideover side="bottom" v-model:open="isVisible">
       <template #header>
-        <NuxtImg :src="poster" width="70" height="70" class="rounded-2xl" />
-        <div class="flex text-white flex-col">
-          <span>{{ artist }}</span>
+        <div v-if="song" class="flex gap-2 items-center">
+          <NuxtImg
+            :src="song.poster.thumb"
+            width="70"
+            height="70"
+            class="rounded-2xl"
+          />
+          <div class="flex text-white flex-col">
+            <span>{{ song.artist }}</span>
+          </div>
         </div>
       </template>
 
@@ -25,8 +20,9 @@
           <UButton
             variant="ghost"
             class="group text-white"
-            @click="overlay.open('addToPlaylistSideOver')"
+            @click="openAddToPlaylist"
           >
+            <IconsPlayList />
             Add to playlist
           </UButton>
 
@@ -44,12 +40,23 @@
 </template>
 
 <script setup lang="ts">
-const { poster, artist } = defineProps<{ poster: string; artist: string }>();
+import { useSongsStore } from "~~/stores/songs";
+import { useUiStore } from "~~/stores/ui";
 
+const ui = useUiStore();
+const songsStore = useSongsStore();
 const overlay = useOverlayManager();
+
+const song = computed(() =>
+  songsStore.list.find((s) => s._id === ui.selectedSongId),
+);
 
 const isVisible = computed({
   get: () => overlay.isOpen("songOptionsSideOver"),
   set: (val) => (val ? overlay.open("songOptionsSideOver") : overlay.close()),
 });
+
+const openAddToPlaylist = () => {
+  overlay.open("addToPlaylistSideOver");
+};
 </script>

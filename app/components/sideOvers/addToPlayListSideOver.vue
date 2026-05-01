@@ -35,15 +35,14 @@
 </template>
 
 <script setup lang="ts">
+import { useUiStore } from "~~/stores/ui";
 import { usePlaylist } from "~/composables/usePlayList";
 
-const props = defineProps<{
-  songId: string;
-}>();
-
 const overlay = useOverlayManager();
-const { getAllPlaylist, playlists, addSong } = usePlaylist();
+const ui = useUiStore();
+const toast = useToast();
 
+const { getAllPlaylist, playlists, addSong } = usePlaylist();
 await getAllPlaylist();
 
 const isVisible = computed({
@@ -52,11 +51,18 @@ const isVisible = computed({
 });
 
 const setSongToPlayList = async (playList_id: string) => {
-  let data: object = {
+  const data = {
     playlistId: playList_id,
-    songId: props.songId,
+    songId: ui.selectedSongId,
   };
 
-  addSong(data);
+  await addSong(data);
+
+  toast.add({
+    title: "آهنگ با موفقیت اضافه شد",
+    color: "primary", // اگر رنگِ green ارور داد، primary یا success بذار
+  });
+
+  overlay.close();
 };
 </script>

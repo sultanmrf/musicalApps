@@ -1,17 +1,12 @@
 import { defineStore } from "pinia";
 
-export const useUIStore = defineStore("ui", {
+export const useUiStore = defineStore("ui", {
   state: () => ({
-    selectedSong: null as null | {
-      poster: string;
-      artist: string;
-      id: string;
-    },
+    selectedSongId: null,
   }),
-
   actions: {
-    setSelectedSong(data: { poster: string; artist: string; id: string }) {
-      this.selectedSong = data;
+    setSong(id) {
+      this.selectedSongId = id;
     },
   },
 });

@@ -10,6 +10,7 @@
       <NuxtPage />
       <FileUpload :class="marginBottomFileUpload" />
     </main>
+    <UNotifications />
     <LayoutsSearch />
     <LayoutsFooter />
     <MusicPlayer :isShowMusicPlayMini="isShowMusicPlayMini" />
