@@ -1,4 +1,3 @@
-import filesModel from "../../models/Files";
 import path from "path";
 import fs from "fs";
 import { parseFile } from "music-metadata";
@@ -19,7 +18,6 @@ export default defineEventHandler(async (event) => {
 
   try {
     for (const file of formData) {
-
       const savedFile = await uploadFile(file, "music");
       const newName = savedFile.name;
       const filePath = path.resolve("./public" + savedFile.path);
@@ -36,7 +34,7 @@ export default defineEventHandler(async (event) => {
       let poster = { large: "", medium: "", thumb: "" };
 
       if (metadata?.common?.picture?.length) {
-        const pathImage = "images"; 
+        const pathImage = "images";
         const pic = metadata.common.picture[0];
         const baseName = `cover-${Date.now()}-${newName.replace(".mp3", "")}`;
 
@@ -86,7 +84,7 @@ export default defineEventHandler(async (event) => {
 
       console.log(dataFileForDatabase);
 
-      await filesModel.create(dataFileForDatabase);
+      create<any>("songs", dataFileForDatabase);
     }
 
     return {

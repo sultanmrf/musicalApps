@@ -74,10 +74,6 @@
           <iconsMenuList size="sm" class="text-primary" />
         </ButtonsBtnOutline>
 
-        <SideOversSongOptionsSideOver />
-
-        <SideOversAddToPlayListSideOver />
-
         <music-wave-loading :show="music.status === 'play'" />
       </div>
     </div>
@@ -88,7 +84,6 @@
 
 <script setup lang="ts">
 import { ref, computed, inject } from "vue";
-import { useSongsStore } from "~~/stores/songs";
 import { useAudioStore } from "~~/stores/audio";
 import type { Song } from "~~/shared/types/song";
 import { useUiStore } from "~~/stores/ui";
@@ -97,7 +92,6 @@ const ui = useUiStore();
 const overlay = useOverlayManager();
 const { music, listSongs } = defineProps<{ music: Song; listSongs: [Song] }>();
 const storeAudio = useAudioStore();
-const songsStore = useSongsStore();
 const storeSetting = inject("storeSetting");
 const tilt = ref({ x: 0, y: 0 });
 const isHover = ref(false);
@@ -141,7 +135,6 @@ const openOptions = () => {
 const runPlaySong = () => {
   storeAudio.setListPlay(listSongs);
   storeAudio.playSong(music._id, music.path);
-  songsStore.songSelected = music;
   storeSetting?.setDataOpen(true);
 };
 

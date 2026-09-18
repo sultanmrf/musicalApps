@@ -1,0 +1,62 @@
+[
+  {
+    "name": "7 Dey",
+    "artist": "Ershad Ft Aboozar Mosibat",
+    "album": "Broadcast: AliReza NoLiFe",
+    "duration": 263.0791836734694,
+    "path": "/music/1789733274778-4_5769160501900608396.mp3",
+    "size": 11188159,
+    "type": "audio/mpeg",
+    "poster": {
+      "large": "images/music/cover-1789733274812-1789733274778-4_5769160501900608396-1200.jpg",
+      "medium": "images/music/cover-1789733274812-1789733274778-4_5769160501900608396-600.jpg",
+      "thumb": "images/music/cover-1789733274812-1789733274778-4_5769160501900608396-300.jpg"
+    },
+    "status": "waiting",
+    "context": "",
+    "loves": [],
+    "_id": "mu6wzdmomarmsfsq",
+    "createdAt": "2026-09-18T12:07:55.584Z",
+    "updatedAt": "2026-09-18T12:07:55.584Z"
+  },
+  {
+    "name": "Ahriman",
+    "artist": "Ershad",
+    "album": "[ParsiaMusic.Ir]",
+    "duration": 424.43755102040814,
+    "path": "/music/1789733275584-ershad---ahriman.mp3",
+    "size": 17055672,
+    "type": "audio/mpeg",
+    "poster": {
+      "large": "images/music/cover-1789733275597-1789733275584-ershad---ahriman-1200.jpg",
+      "medium": "images/music/cover-1789733275597-1789733275584-ershad---ahriman-600.jpg",
+      "thumb": "images/music/cover-1789733275597-1789733275584-ershad---ahriman-300.jpg"
+    },
+    "status": "waiting",
+    "context": "",
+    "loves": [],
+    "_id": "mu6wzdz5etd2pofw",
+    "createdAt": "2026-09-18T12:07:56.033Z",
+    "updatedAt": "2026-09-18T12:07:56.033Z"
+  },
+  {
+    "name": "Feragh",
+    "artist": "Milad Rastad & Ahmad Solo",
+    "album": "unknown",
+    "duration": 299.184,
+    "path": "/music/1789733276033-milad-rastad-&-ahmad-solo---feragh.mp3",
+    "size": 13727761,
+    "type": "audio/mpeg",
+    "poster": {
+      "large": "images/music/cover-1789733276044-1789733276033-milad-rastad-&-ahmad-solo---feragh-1200.jpg",
+      "medium": "images/music/cover-1789733276044-1789733276033-milad-rastad-&-ahmad-solo---feragh-600.jpg",
+      "thumb": "images/music/cover-1789733276044-1789733276033-milad-rastad-&-ahmad-solo---feragh-300.jpg"
+    },
+    "status": "waiting",
+    "context": "",
+    "loves": [],
+    "_id": "mu6wzeve0dtuem7d",
+    "createdAt": "2026-09-18T12:07:57.194Z",
+    "updatedAt": "2026-09-18T12:07:57.194Z"
+  }
+]

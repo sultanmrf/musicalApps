@@ -8,7 +8,7 @@
     >
       <div class="relative">
         <NuxtImg
-          :src="playList.cover ? playList.cover : 'images/playList.png'"
+          :src="playList.cover ? playList.cover : '/images/playList.png'"
           width="300"
           height="300"
           format="webp"
@@ -32,7 +32,9 @@
           {{ playList.name }}
         </h3>
 
-        <span class="text-muted text-sm">Songs 4 </span>
+        <span class="text-muted text-sm"
+          >Songs {{ playList.songs?.length || 0 }}
+        </span>
       </div>
     </UCard>
   </NuxtLink>

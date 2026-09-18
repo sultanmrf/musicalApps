@@ -22,10 +22,6 @@
       :playList="playList"
     />
   </div>
-
-  <ModalsCreate v-model="storeSetting.showModal">
-    <FormsPlayListCreate />
-  </ModalsCreate>
 </template>
 
 <script setup lang="ts">

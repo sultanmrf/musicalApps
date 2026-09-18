@@ -83,7 +83,9 @@ export const useAudioStore = defineStore("audioStore", () => {
     idSongCurrentPlay.value = musicId;
 
     songsStore.songSelected =
-      listPlay.songs?.find((s) => s._id === musicId) || null;
+      songsStore.list.find((s) => s._id === musicId) ||
+      listPlay.songs?.find((s) => s._id === musicId) ||
+      null;
     timerInterval.value = setInterval(seekUpdate, 1000);
   };
 

@@ -1,11 +1,9 @@
-import usersModel from "../../models/Users";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 export default defineEventHandler(async (event) => {
   const { username, email, password } = await readBody(event);
 
-  const existingUser = await usersModel.findOne({ email });
+  const existingUser = findOne<any>("users", { email });
 
   if (existingUser) {
     throw createError({ statusCode: 400, message: "User already exists" });
@@ -21,7 +19,7 @@ export default defineEventHandler(async (event) => {
     lastLogin: "200000",
   };
 
-  await usersModel.create(dataFileForDatabase);
-  
+  create<any>("users", dataFileForDatabase);
+
   return { message: "User created successfully" };
 });

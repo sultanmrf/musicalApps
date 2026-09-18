@@ -1,5 +1,3 @@
-import playlistModel from "../../models/Playlist";
-
 export default defineEventHandler(async (event) => {
   try {
     const id = getRouterParam(event, "id");
@@ -11,7 +9,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const playlist = await playlistModel.findById(id);
+    const playlist = findById<any>("playlists", id);
 
     if (!playlist) {
       throw createError({
@@ -20,7 +18,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    return playlist;
+    return populatePlaylistSongs(playlist);
   } catch (error) {
     console.error("Error fetching playlist:", error);
     throw createError({

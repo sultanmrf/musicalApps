@@ -14,6 +14,11 @@
     <LayoutsSearch />
     <LayoutsFooter />
     <MusicPlayer :isShowMusicPlayMini="isShowMusicPlayMini" />
+    <SideOversSongOptionsSideOver />
+    <SideOversAddToPlayListSideOver />
+    <ModalsCreate v-model="storeSetting.showModal">
+      <FormsPlayListCreate />
+    </ModalsCreate>
   </div>
 </template>
 

@@ -21,7 +21,6 @@
     "dotenv": "^17.2.3",
     "jimp": "^0.22.8",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^8.19.2",
     "music-metadata": "^11.11.0",
     "nuxt": "^4.2.0",
     "pinia": "^3.0.3",

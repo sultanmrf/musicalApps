@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="currentPlaylist"
     class="relative mt-4 w-full h-screen flex flex-col items-center rounded-3xl overflow-hidden text-white"
   >
     <div class="section-album relative w-full max-w-4xl">
@@ -7,7 +8,7 @@
         class="section-poster relative group overflow-hidden rounded-bl-[6rem]"
       >
         <NuxtImg
-          :src="currentPlaylist.cover.thumb"
+          :src="playlistCover"
           width="600"
           height="350"
           format="webp"
@@ -52,4 +53,8 @@ const route = useRoute();
 const { getPlaylist, currentPlaylist } = usePlaylist();
 
 await getPlaylist(route.params.id as string);
+
+const playlistCover = computed(
+  () => currentPlaylist.value?.cover || "/images/playList.png",
+);
 </script>

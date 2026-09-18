@@ -1,10 +1,8 @@
 import jwt from "jsonwebtoken";
-import Users from "../../models/Users";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
 
-  // ✅ خواندن کوکی
   const token = getCookie(event, "token");
 
   if (!token) {
@@ -24,7 +22,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // ✅ decoded باید object باشه
   if (!decoded || typeof decoded === "string") {
     throw createError({
       statusCode: 401,
@@ -32,8 +29,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // ✅ گرفتن یوزر از دیتابیس
-  const user = await Users.findById(decoded.userId).select("-password");
+  const user = findById<any>("users", decoded.userId);
 
   if (!user) {
     throw createError({
@@ -42,10 +38,10 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // ✅ برگرداندن فقط اطلاعات غیرحساس
+  const { password, ...userWithoutPassword } = user;
   return {
-    _id: user._id,
-    email: user.email,
-    name: user.name || null,
+    _id: userWithoutPassword._id,
+    email: userWithoutPassword.email,
+    name: userWithoutPassword.username || null,
   };
 });

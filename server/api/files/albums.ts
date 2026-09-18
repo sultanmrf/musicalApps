@@ -1,6 +1,4 @@
-import filesModel from '../../models/Files'
-
 export default defineEventHandler(async (event) => {
-	let res = await filesModel.find().where("album");
-	return res;
+  let res = findAll<any>("songs").filter((f: any) => f.album);
+  return res;
 });

@@ -11,11 +11,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: "songId is required" });
   }
 
-  if (Array.isArray(playlist.songs) && playlist.songs.includes(body.songId)) {
-    return populatePlaylistSongs(playlist);
-  }
-
   return populatePlaylistSongs(
-    pushToArray<any>("playlists", body.playlistId, "songs", body.songId)
+    pullFromArray<any>("playlists", body.playlistId, "songs", body.songId)
   );
 });

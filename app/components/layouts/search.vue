@@ -100,8 +100,9 @@ const results = computed(() =>
 );
 
 const runPlaySong = (item) => {
+  const songResults = results.value.filter((r) => r.type === "song");
+  storeAudio.setListPlay(songResults as any);
   storeAudio.playSong(item._id, item.path);
-  songsStore.songSelected = item;
   isOpenSearch.value = false;
   storeSetting?.setDataOpen(true);
 };

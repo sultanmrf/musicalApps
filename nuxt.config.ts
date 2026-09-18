@@ -28,11 +28,6 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/css/main.css"],
   runtimeConfig: {
-    dburl: process.env.DATABASE_URI,
-    dbName: process.env.DBNAME,
-    user: process.env.DBUSERNAME,
-    pass: process.env.DBPASSWORD,
-    authSource: process.env.DBAUTHSOURCE,
-    jwtSecret: process.env.JWT_SECRET,
+    jwtSecret: process.env.JWT_SECRET || "default-secret",
   },
 });

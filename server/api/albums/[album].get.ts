@@ -1,7 +1,5 @@
-import filesModel from "../../models/Files";
-
 export default defineEventHandler(async (event) => {
-  const album = decodeURIComponent(event.context.params!.album)
-
-  return await filesModel.find({ album }).sort({ name: 1 })
-})
+  const album = decodeURIComponent(event.context.params!.album);
+  const songs = findMany<any>("songs", { album });
+  return songs.sort((a: any, b: any) => (a.name > b.name ? 1 : -1));
+});
