@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "106acf230014cbb43ca34e6410371321b56ca742f9ee0442e8ec05bf02eb0384"
+    },
+    "nuxt": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "skillPath": "skills/nuxt/SKILL.md",
+      "computedHash": "748962b963506cdfe0584a4d1c8324f6e3340bdb14b6c7f0921d86a1bbe20cbf"
+    }
+  }
+}

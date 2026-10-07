@@ -83,7 +83,6 @@
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
-import Scene from "~/components/scene.vue";
 const storeSongs = inject("storeSongs");
 
 const items = ref<NavigationMenuItem[][]>([
